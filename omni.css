@@ -1,0 +1,83 @@
+/* app/edu/omni.css
+   Scoped theme + animation layer for the Wylorise — Mastering Google Ads (academy) site.
+   Everything is scoped under .omni-root so it never affects the store tenant.
+   Palette: blue + amber (Google-adjacent, deliberately NOT the Google four-color logo). */
+
+.omni-root {
+  /* ── Palette ── */
+  --omni-paper: #ffffff;
+  --omni-surface: #f1f5ff;       /* light blue-tinted section background */
+  --omni-surface-2: #e4ecff;
+  --omni-ink: #0b0e1a;           /* near-black text */
+  --omni-ink-soft: #4f5668;      /* secondary text */
+  --omni-line: #e3e9f7;          /* hairline borders */
+  --omni-brand: #0057e7;         /* blue — primary workhorse */
+  --omni-brand-2: #3d7bff;       /* lighter blue for gradients */
+  --omni-brand-soft: #e6eeff;    /* blue tint */
+  --omni-pop: #ffa700;           /* amber — the one bold accent, used sparingly */
+  --omni-pop-soft: #fff3d6;      /* amber tint */
+
+  font-family: var(--font-omni-body), ui-sans-serif, system-ui, sans-serif;
+  color: var(--omni-ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.omni-root .font-display,
+.omni-root h1,
+.omni-root h2,
+.omni-root h3,
+.omni-root h4 {
+  font-family: var(--font-omni-display), ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: -0.02em;
+}
+
+.omni-root .font-mono {
+  font-family: var(--font-omni-mono), ui-monospace, "SFMono-Regular", monospace;
+}
+
+.omni-root ::selection { background-color: var(--omni-brand); color: #fff; }
+
+/* Smooth scrolling only on academy pages (scoped via :has — no global change) */
+html:has(.omni-root) { scroll-behavior: smooth; }
+
+/* Framer Motion's useScroll measures offsets against the scroll container
+   (<html>) and warns in dev if it is position: static. A non-static position
+   fixes the hero offset math. No visual effect; scoped to academy via :has. */
+html:has(.omni-root) { position: relative; }
+
+/* ── Signature helpers: search-query caret + amber highlights ── */
+@keyframes omni-caret { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+.omni-root .omni-caret { animation: omni-caret 1.1s steps(1) infinite; color: var(--omni-brand); }
+
+.omni-root .omni-mark {
+  box-shadow: inset 0 -0.34em 0 var(--omni-pop-soft);
+  padding: 0 0.06em;
+}
+.omni-root .omni-underline {
+  background-image: linear-gradient(var(--omni-pop), var(--omni-pop));
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 100% 0.16em;
+  padding-bottom: 0.04em;
+}
+
+/* Namespaced keyframes so they can never collide with the store */
+@keyframes omni-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes omni-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+@keyframes omni-spin-slow { to { transform: rotate(360deg); } }
+@keyframes omni-aurora { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+
+.omni-root .omni-marquee { animation: omni-marquee 32s linear infinite; }
+.omni-root .omni-float { animation: omni-float 7s ease-in-out infinite; }
+.omni-root .omni-spin-slow { animation: omni-spin-slow 22s linear infinite; }
+.omni-root .omni-aurora { background-size: 200% 200%; animation: omni-aurora 14s ease infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .omni-root .omni-marquee,
+  .omni-root .omni-float,
+  .omni-root .omni-spin-slow,
+  .omni-root .omni-aurora,
+  .omni-root .omni-caret { animation: none; }
+  html:has(.omni-root) { scroll-behavior: auto; }
+}
