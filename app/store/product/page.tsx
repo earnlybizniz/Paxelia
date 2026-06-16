@@ -7,10 +7,9 @@ import { SiteFooter } from '@/components/shell/SiteFooter'
 import { ProductProvider } from '@/contexts/product-context'
 import { ProductHero } from '@/components/product/ProductHero'
 import { SocialProofBar } from '@/components/product/SocialProofBar'
-import { ProductVideo } from '@/components/product/ProductVideo'
+import { FeatureGrid } from '@/components/product/FeatureGrid'
+import { PainSolution } from '@/components/product/PainSolution'
 import { DescriptionSections } from '@/components/product/DescriptionSections'
-import { DurabilityBlock } from '@/components/product/DurabilityBlock'
-import { FitGuide } from '@/components/product/FitGuide'
 import { ReviewsModule } from '@/components/product/ReviewsModule'
 import { ProductFaq } from '@/components/product/ProductFaq'
 import { ClosingCta } from '@/components/product/ClosingCta'
@@ -19,10 +18,10 @@ import { ProductTracking } from '@/components/product/ProductTracking'
 import { ALDER_PRODUCT } from '@/lib/pdp-product'
 
 export const metadata: Metadata = {
-  title: `${ALDER_PRODUCT.name} — Natural Bamboo Standing Desk`,
+  title: `${ALDER_PRODUCT.name} — Electric Dual-Level Standing Desk`,
   description: ALDER_PRODUCT.highlights.slice(0, 3).join('. '),
   openGraph: {
-    title: `${ALDER_PRODUCT.name} — Natural Bamboo Standing Desk`,
+    title: `${ALDER_PRODUCT.name} — Electric Dual-Level Standing Desk`,
     description: ALDER_PRODUCT.highlights.slice(0, 3).join('. '),
     images: [ALDER_PRODUCT.gallery[0].src || ''],
   },
@@ -64,20 +63,19 @@ export default function ProductPage() {
           <ProductHero />
           {/* 2. Social proof bar */}
           <SocialProofBar />
-          {/* 3. Product description (alternating image/text blocks) */}
+          {/* 3. At-a-glance feature overview */}
+          <FeatureGrid />
+          {/* 4. Problem → solution */}
+          <PainSolution />
+          {/* 5. Feature story (broad → specific) */}
           <DescriptionSections />
-          {/* 4. Durability */}
-          <DurabilityBlock />
-          {/* 5. Product video (16:9 showcase) */}
-          <ProductVideo />
-          {/* 7. Fit guide / dimensions */}
-          <FitGuide />
-          {/* 8. Reviews */}
+          {/* 6. Reviews */}
           <ReviewsModule />
-          {/* 9. FAQ */}
+          {/* 7. FAQ */}
           <ProductFaq />
-          {/* 10. Closing CTA */}
+          {/* 8. Closing CTA */}
           <ClosingCta />
+          {/* Comparison table, size finder, how-to, specs & demo video arrive in the next batches */}
         </main>
 
         {/* Sticky buy bar */}

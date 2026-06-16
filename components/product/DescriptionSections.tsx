@@ -1,173 +1,250 @@
+'use client'
+
+import { useEffect, useRef } from 'react'
 import Image from 'next/image'
 import { Section } from '@/components/shell/Section'
-import { Reveal } from '@/components/shell/Reveal'
 import { Eyebrow } from '@/components/shell/Typography'
 
 /**
- * DescriptionSections — the long-form product story, told as alternating
- * image/text blocks. Replaces the old FeatureDeepDive section that sat below
- * the product video.
+ * DescriptionSections — the long-form Snapsticker Apex story, told as alternating
+ * media/text blocks that go from broad (the dual-level concept) to specific
+ * (drawers, holders, ports, lighting…) as you scroll.
  *
- * Layout:
- *   • Desktop (md+): two columns, image and copy side by side, alternating
- *     side every block (block 1 image-left, block 2 image-right, …).
- *   • Mobile: a single column where, for every block, the COPY comes first and
- *     its image sits directly beneath it — copy 1 → image 1 → copy 2 → image 2 …
- *     (the copy is always first in the DOM; md:order only flips sides on desktop).
+ * Each block's media can be a photo OR a looping muted video (for gifs we convert
+ * to mp4). Until an asset is added (`src: ''`) a clean placeholder tile renders so
+ * there's never a broken image and zero layout shift when the real asset drops in.
  *
- * Images are square 800×800 assets in /public/images/product/description/.
- * Block 1 is a transparent desk cutout (object-contain so it "floats"); every
- * other block is a photo that fills its square frame (object-cover).
- *
- * All copy lives in BLOCKS below — edit freely.
+ * Asset locations:
+ *   • photos → /public/images/product/description/<name>.webp   (square 1200×1200)
+ *   • videos → /public/videos/description/<name>.mp4            (square, muted loop)
  */
+
+type Media = {
+  kind: 'image' | 'video'
+  src: string // '' until the asset is added
+  alt: string
+  poster?: string
+  fit?: 'cover' | 'contain'
+  placeholder: string // gradient shown before the asset is set
+}
 
 type Block = {
   eyebrow: string
   heading: string
   body: string[]
-  image: string
-  imageAlt: string
-  fit?: 'cover' | 'contain'
-  cta?: { label: string; href: string }
+  media: Media
 }
 
 const BLOCKS: Block[] = [
   {
-    eyebrow: 'Award-winning design',
-    heading: 'A desk worth showing off',
+    eyebrow: 'Three-tier workspace',
+    heading: 'Two desks in one footprint',
     body: [
-      'Solid natural-bamboo top with a quiet dual-motor frame — the kind of restraint that earned International Design and SIT Furniture Design Awards.',
-      'Built to look beautiful and perform flawlessly for years in any workspace.',
+      'An upper monitor shelf, a full work surface, and a hidden pegboard workbench — stacked into one frame, so a setup that normally sprawls saves up to 50% of the space.',
+      'Sit two monitors up top or clamp on a monitor arm, work below, and keep tools on the panel behind. Everything in reach, nothing in the way.',
     ],
-    image: '/images/product/description/01-design.png',
-    imageAlt: 'The Wylorise Sovereign Q8 standing desk with a walnut top and black frame',
-    fit: 'contain',
+    media: {
+      kind: 'image',
+      src: '',
+      alt: 'The Snapsticker Apex shown as three labelled tiers — monitor shelf, work surface, and hidden pegboard',
+      placeholder: 'linear-gradient(135deg, #efe7da 0%, #a9743f 100%)',
+    },
   },
   {
-    eyebrow: 'Dual-motor · three-stage frame',
-    heading: 'A workspace that moves with you',
+    eyebrow: 'Electric dual-motor lift',
+    heading: 'Sit, stand, present — one tap',
     body: [
-      'Twin motors with three-stage oval legs adjust from 22.8 to 49.2 inches—quiet enough to adjust mid-call, sturdy enough for multi-monitor setups without wobble.',
-      'Four presets remember your exact heights, and anti-collision detection stops instantly when meeting obstacles.',
+      'Glide from 30 to 55.9 inches on a quiet dual-motor lift. Three memory presets snap straight to your sitting, standing, and presentation heights.',
+      'Switching positions through the day eases back and neck strain and keeps your focus up — no thinking, no workout.',
     ],
-    image: '/images/product/description/02-flexibility.jpg',
-    imageAlt: 'The dual-motor three-stage lifting frame of the Sovereign Q8',
+    media: {
+      kind: 'video',
+      src: '',
+      alt: 'The Snapsticker Apex rising through its sitting, presentation, and standing presets',
+      placeholder: 'linear-gradient(135deg, #ece4d6 0%, #6f4a26 100%)',
+    },
   },
   {
-    eyebrow: 'Integrated cable tray',
-    heading: 'Cables, out of sight',
+    eyebrow: 'Hidden pegboard + drawers',
+    heading: 'A place for every last thing',
     body: [
-      'Full-width tray runs the frame length so cables, adapters, and power strips glide smoothly as the desk rises and lowers—never dangling, never snagging.',
-      'Clean desk appearance with all tangles hidden beneath.',
+      'A magnetic pegboard hides behind the upper deck — move hooks, holders, and tools around in seconds, no screws or drilling.',
+      'Smooth-gliding drawers keep parts, cables, and documents out of sight: three on the Compact, up to six on the larger sizes.',
     ],
-    image: '/images/product/description/03-cable-tray.jpg',
-    imageAlt: 'The under-desk cable management tray running the width of the frame',
+    media: {
+      kind: 'video',
+      src: '',
+      alt: 'Drawers gliding open and accessories rearranging on the magnetic pegboard',
+      placeholder: 'linear-gradient(135deg, #e5e2dc 0%, #1a1a1a 100%)',
+    },
   },
   {
-    eyebrow: 'Pull-out drawer',
-    heading: 'Room for the small things',
+    eyebrow: 'Snap-on accessories',
+    heading: 'Drinks and snacks, off your desktop',
     body: [
-      'A 28.3 × 12.8-inch drawer sits flush under the top for pens, chargers, and clutter, then tucks completely away when not needed.',
+      'Clip cup and snack holders onto the side rail exactly where you want them — deep or shallow, fixed or movable. Your surface stays clear and nothing gets knocked into your keyboard.',
     ],
-    image: '/images/product/description/04-drawer.jpg',
-    imageAlt: 'The built-in pull-out storage drawer, open and organized',
+    media: {
+      kind: 'video',
+      src: '',
+      alt: 'A cup holder and snack tray snapping onto the side rail of the Snapsticker Apex',
+      placeholder: 'linear-gradient(135deg, #f0e7d6 0%, #8a5a2b 100%)',
+    },
   },
   {
-    eyebrow: 'Bamboo top · wireless charging',
-    heading: 'A surface that gives back',
+    eyebrow: 'Built-in power',
+    heading: 'Charge everything, hide every cable',
     body: [
-      'Solid bamboo sealed with protective lacquer—twice as hard as ordinary wood, water and scratch-resistant, and sustainable since bamboo regrows in years.',
-      'A 10W Qi pad is embedded in the surface; set your phone down and it charges—no cable required.',
+      'Dust-proof AC outlets sit flush in the surface, a fast USB-C port handles your laptop, and a 3-in-1 wireless pad tops up your phone, earbuds, and watch at once.',
+      'Power lives on the desk — not in a tangle on the floor.',
     ],
-    image: '/images/product/description/05-bamboo-charging.jpg',
-    imageAlt: 'The natural bamboo desktop with a phone charging on the built-in wireless pad',
+    media: {
+      kind: 'image',
+      src: '',
+      alt: 'Flush AC outlets, USB-C port, and a 3-in-1 wireless charging pad built into the desktop',
+      placeholder: 'linear-gradient(135deg, #e8dcc2 0%, #2a2a2a 100%)',
+    },
   },
   {
-    eyebrow: 'Smart touch console',
-    heading: 'Meets you at your level',
+    eyebrow: 'Task + ambient lighting',
+    heading: 'Light for work, light for play',
     body: [
-      'Backlit console with digital height display, four memory presets, and USB-A/USB-C ports for instant charging.',
-      'One tap returns to your exact sit or stand height—no reaching, no guesswork.',
+      'A 10W task light under the upper deck throws clean, shadow-free 5000K light over detailed work. Behind it, a 10W RGBW strip sets the mood — white, warm, single colour, or dynamic, and it can sync to music or motion.',
     ],
-    image: '/images/product/description/06-control-panel.jpg',
-    imageAlt: 'The smart touch control console with height display, presets, and USB ports',
+    media: {
+      kind: 'video',
+      src: '',
+      alt: 'The Snapsticker Apex lighting shifting from white task light to coloured RGB ambience',
+      placeholder: 'linear-gradient(135deg, #efe7da 0%, #5a3d18 100%)',
+    },
   },
   {
-    eyebrow: 'Monitor-arm ready',
-    heading: 'Clamp on with confidence',
+    eyebrow: 'Foldable PC stand',
+    heading: 'Your tower, up off the floor',
     body: [
-      'A solid wood block fixed beneath the top gives monitor-arm clamps a firm grip—no flexing or cracking the bamboo.',
-      'Screens stay rock-solid where you place them, even as the desk moves.',
+      'A built-in stand holds your PC tower at the side — off the floor and out of the dust — then folds away when you don’t need it.',
     ],
-    image: '/images/product/description/07-monitor-arm.jpg',
-    imageAlt: 'The solid wood block under the desktop that supports a monitor-arm clamp',
+    media: {
+      kind: 'video',
+      src: '',
+      alt: 'The side panel folding out into a stand and a PC tower sliding into place',
+      placeholder: 'linear-gradient(135deg, #e6d9bd 0%, #1a1a1a 100%)',
+    },
   },
   {
-    eyebrow: 'Three-step setup',
-    heading: 'Three steps, done',
+    eyebrow: 'Lockable casters',
+    heading: 'Roll it anywhere, then lock it down',
     body: [
-      'No cryptic diagrams or missing screws. Attach top, fit frame, set feet—and you&apos;re working. Every part is clearly labeled so assembly takes minutes.',
+      'Wheel the whole desk where you want it and step on the one-touch brake. All four casters lock solid — it won’t drift with two monitors and a full load on top.',
     ],
-    image: '/images/product/description/08-assembly.jpg',
-    imageAlt: 'The labeled components of the Sovereign Q8 laid out for assembly',
+    media: {
+      kind: 'video',
+      src: '',
+      alt: 'A foot pressing the one-step brake on the Snapsticker Apex caster',
+      placeholder: 'linear-gradient(135deg, #efe7da 0%, #6f4a26 100%)',
+    },
+  },
+  {
+    eyebrow: 'Built to last',
+    heading: 'Heavy-duty, and quiet about it',
+    body: [
+      'A steel-and-aluminium frame carries up to 50 kg (110 lb) on twin synchronised motors, with rounded anti-collision corners for safety.',
+      'Those motors run under 40 dB — quiet enough to raise the desk mid-call or mid-stream without anyone hearing it.',
+    ],
+    media: {
+      kind: 'video',
+      src: '',
+      alt: 'The Snapsticker Apex lifting smoothly with a heavy load on top',
+      placeholder: 'linear-gradient(135deg, #e8dcc2 0%, #2a2a2a 100%)',
+    },
   },
 ]
+
+function BlockMedia({ media, priority }: { media: Media; priority?: boolean }) {
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  useEffect(() => {
+    const v = videoRef.current
+    if (!v || media.kind !== 'video' || !media.src) return
+    v.muted = true
+    const tryPlay = () => v.play().catch(() => {})
+    tryPlay()
+    v.addEventListener('canplay', tryPlay, { once: true })
+    return () => v.removeEventListener('canplay', tryPlay)
+  }, [media.src, media.kind])
+
+  // No asset yet → clean placeholder tile (faint label, zero layout shift).
+  if (!media.src) {
+    return (
+      <div className="absolute inset-0 flex items-center justify-center" style={{ background: media.placeholder }}>
+        <span className="font-sans text-[0.7rem] uppercase tracking-[0.22em] text-[var(--paper)]/45">
+          {media.kind === 'video' ? 'Video' : 'Photo'}
+        </span>
+      </div>
+    )
+  }
+
+  if (media.kind === 'video') {
+    return (
+      <video
+        ref={videoRef}
+        src={media.src}
+        poster={media.poster}
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="auto"
+        aria-label={media.alt}
+        className={`absolute inset-0 w-full h-full ${media.fit === 'contain' ? 'object-contain' : 'object-cover'}`}
+      />
+    )
+  }
+
+  return (
+    <Image
+      src={media.src}
+      alt={media.alt}
+      fill
+      sizes="(max-width: 768px) 100vw, 600px"
+      priority={priority}
+      className={media.fit === 'contain' ? 'object-contain p-6 md:p-10' : 'object-cover'}
+    />
+  )
+}
 
 export function DescriptionSections() {
   return (
     <Section id="features" tone="paper" wash>
       <div className="flex flex-col gap-20 md:gap-28">
         {BLOCKS.map((b, i) => {
-          const imageLeft = i % 2 === 0
+          const mediaLeft = i % 2 === 0
           return (
             <div key={i} className="grid items-center gap-8 md:grid-cols-2 md:gap-14">
-              {/* COPY — always first in the DOM → on mobile it stacks above the image */}
-              <Reveal
-                variant="rise"
-                className={`flex flex-col gap-5 ${imageLeft ? 'md:order-2' : 'md:order-1'}`}
-              >
+              {/* COPY — always first in the DOM so it stacks above the media on mobile */}
+              <div className={`flex flex-col gap-5 ${mediaLeft ? 'md:order-2' : 'md:order-1'}`}>
                 <Eyebrow>{b.eyebrow}</Eyebrow>
                 <h2
-                  className="font-display font-normal leading-[1.1] tracking-[-0.02em] text-[var(--ink)]"
-                  style={{ fontSize: 'clamp(1.9rem, 3.5vw, 2.75rem)' }}
+                  className="font-display font-semibold leading-[1.14] tracking-[-0.01em] text-[var(--ink)]"
+                  style={{ fontSize: 'clamp(1.6rem, 3vw, 2.2rem)' }}
                 >
                   {b.heading}
                 </h2>
                 <div className="flex flex-col gap-3">
                   {b.body.map((p, j) => (
-                    <p
-                      key={j}
-                      className="max-w-[46ch] font-sans text-[0.98rem] leading-relaxed text-[var(--ink-soft)]"
-                    >
+                    <p key={j} className="max-w-[48ch] font-sans text-[0.98rem] leading-relaxed text-[var(--ink-soft)]">
                       {p}
                     </p>
                   ))}
                 </div>
-                {b.cta && (
-                  <div className="pt-1">
-                    <a
-                      href={b.cta.href}
-                      className="inline-flex items-center rounded-full border border-[var(--ink)]/25 px-6 py-2.5 font-sans text-[0.85rem] font-medium text-[var(--ink)] transition-colors duration-200 hover:border-[var(--ink)] hover:bg-[var(--ink)] hover:text-[var(--paper)]"
-                    >
-                      {b.cta.label}
-                    </a>
-                  </div>
-                )}
-              </Reveal>
+              </div>
 
-              {/* IMAGE */}
-              <Reveal variant="rise" className={imageLeft ? 'md:order-1' : 'md:order-2'}>
-                <div className="relative aspect-square w-full overflow-hidden rounded-[16px]">
-                  <Image
-                    src={b.image}
-                    alt={b.imageAlt}
-                    fill
-                    className={b.fit === 'contain' ? 'object-contain p-6 md:p-10' : 'object-cover'}
-                    sizes="(max-width: 768px) 100vw, 600px"
-                  />
+              {/* MEDIA */}
+              <div className={mediaLeft ? 'md:order-1' : 'md:order-2'}>
+                <div className="relative aspect-square w-full overflow-hidden rounded-[16px] bg-[var(--paper2)]">
+                  <BlockMedia media={b.media} priority={i === 0} />
                 </div>
-              </Reveal>
+              </div>
             </div>
           )
         })}
