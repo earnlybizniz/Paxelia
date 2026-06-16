@@ -57,14 +57,14 @@ export function ParsedHeading({
 
 export function StarRating({ value, max = 5, size = 16 }: { value: number; max?: number; size?: number }) {
   return (
-    <div className="flex items-center gap-0.5" aria-label={`${value} out of ${max} stars`}>
+    <div className="flex items-center gap-px" aria-label={`${value} out of ${max} stars`}>
       {Array.from({ length: max }).map((_, i) => {
         const fill = Math.min(1, Math.max(0, value - i))
         return (
           <svg key={i} width={size} height={size} viewBox="0 0 16 16" aria-hidden="true">
             <defs>
               <linearGradient id={`star-${i}`}>
-                <stop offset={`${fill * 100}%`} stopColor="#D4AF37" />
+                <stop offset={`${fill * 100}%`} stopColor="#F5A623" />
                 <stop offset={`${fill * 100}%`} stopColor="var(--ink-mute)" stopOpacity="0.3" />
               </linearGradient>
             </defs>

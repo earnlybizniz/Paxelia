@@ -132,27 +132,27 @@ export type HomeContent = {
 
 export const HOME: HomeContent = {
   brand: {
-    name: 'Wylorise',
-    logoWordmark: 'Wylorise',
+    name: 'Snapsticker',
+    logoWordmark: 'Snapsticker',
     palette: {
-      // White / shades-of-white surfaces (3 stepped near-whites keep sections distinct).
+      // White / near-white surfaces with a faint warm (woody) tint — clean, not clinical.
       paper:      '#ffffff',   // main background — pure white
-      paper2:     '#f7f6f3',   // cards / alt sections — warm off-white
-      paper3:     '#e8e6e0',   // borders / deepest neutral — warm light grey
-      ink:        '#1b1a17',   // primary text — near-black
-      inkSoft:    '#45413b',   // secondary text
-      inkMute:    '#8c867c',   // muted / labels
-      // Honey-amber accent (warm bamboo): buttons + links, bamboo-honey highlight.
-      accent:     '#b07a2e',   // honey amber — buttons, links
-      accentDeep: '#8d6022',   // amber hover / deeper
-      highlight:  '#cda158',   // bamboo honey — headline italics, stars, accents
+      paper2:     '#f6f5f3',   // cards / alt sections — faint warm white
+      paper3:     '#e6e3dd',   // borders / deepest neutral — warm light sand
+      ink:        '#141414',   // primary text — near-black
+      inkSoft:    '#3a3a3c',   // secondary text
+      inkMute:    '#8a8782',   // muted / labels
+      // Near-black accent (clean tech) with a warm-oak highlight for woody warmth.
+      accent:     '#1a1a1a',   // near-black — buttons, links
+      accentDeep: '#000000',   // black hover / deeper
+      highlight:  '#a9743f',   // warm oak — headline italics, stars, accents
     },
-    fonts: { display: 'Space Grotesk', sans: 'Outfit' },
+    fonts: { display: 'Sora', sans: 'Inter' },
   },
 
   announcement: [
     'Factory-direct pricing — no showroom markup',
-    'Award-winning bamboo, priced honestly',
+    'Sit, stand, present — all in one desk',
     'Free shipping on every US order',
   ],
 
@@ -466,7 +466,7 @@ export const HOME: HomeContent = {
   },
 
   footer: {
-    blurb: 'Natural bamboo standing desks, sold factory-direct and priced honestly.',
+    blurb: 'The electric dual-level standing desk — sit, stand, present, and everything you need built in. Shipped factory-direct.',
     columns: [
       {
         title: 'Product',
@@ -492,10 +492,10 @@ export const HOME: HomeContent = {
       },
     ],
     newsletter: {
-      heading: 'Honest pricing, in your inbox',
-      sub: 'Restock alerts, new colorways, and the occasional very good desk photo.',
+      heading: 'Smarter workspaces, in your inbox',
+      sub: 'Restock alerts, setup ideas, and the occasional very good desk photo.',
     },
     payments: ['Visa', 'Mastercard', 'Amex', 'Apple Pay', 'Google Pay'],
-    legal: `© ${new Date().getFullYear()} Wylorise LLC. All rights reserved.`,
+    legal: `© ${new Date().getFullYear()} Snapsticker LLC. All rights reserved.`,
   },
 }

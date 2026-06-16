@@ -1,13 +1,14 @@
 import type { Metadata, Viewport } from 'next'
 import { POLICY_CONFIG as C } from '@/lib/policies-config'
-import { Sora, Inter, Playfair_Display } from 'next/font/google'
+import { Poppins, Inter, Playfair_Display } from 'next/font/google'
 import './globals.css'
 
-// Retail tenant (Snapsticker): Sora = display/headings, Inter = body.
+// Retail tenant (Snapsticker): Poppins = display/headings, Inter = body.
 // Each exposes a CSS variable that globals.css @theme maps the font utilities to.
-const sora = Sora({
+const poppins = Poppins({
   subsets: ['latin'],
-  variable: '--font-sora',
+  weight: ['400', '500', '600', '700', '800'],
+  variable: '--font-poppins',
   display: 'swap',
 })
 
@@ -50,7 +51,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${sora.variable} ${inter.variable} ${playfair.variable}`}>
+    <html lang="en" className={`${poppins.variable} ${inter.variable} ${playfair.variable}`}>
       <body className="font-body bg-background text-foreground antialiased">
         {children}
       </body>

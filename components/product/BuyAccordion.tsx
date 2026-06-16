@@ -16,7 +16,7 @@ type AccordionItem = {
 
 export function BuyAccordion() {
   const { product, selection } = useProduct()
-  const [openId, setOpenId] = useState<string | null>('specs')
+  const [openId, setOpenId] = useState<string | null>(null)
 
   // Per-size spec overrides: the selected size's own specs appear first,
   // followed by the shared base specs. Lets the Specifications block reflect

@@ -177,7 +177,7 @@ export function Gallery() {
       <div className="flex flex-col gap-3 min-w-0 w-full">
         {/* Main Image — no entrance animation; paints immediately */}
         <div
-          className="relative aspect-square overflow-hidden rounded-[6px] bg-[var(--paper2)] cursor-zoom-in select-none"
+          className="relative aspect-square overflow-hidden rounded-none md:rounded-[8px] bg-[var(--paper2)] cursor-zoom-in select-none -mx-5 md:mx-0"
           style={{ touchAction: 'pan-y' }}
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
@@ -246,46 +246,35 @@ export function Gallery() {
           </div>
         </div>
 
-        {/* Thumbnail strip — visible on ALL breakpoints, horizontally scrollable.
-            min-w-0 + w-full are ESSENTIAL: without them the flex row grows to the
-            full width of all thumbnails (~792px) and, because grid/flex children
-            default to min-width:auto, drags the entire gallery column to that
-            width — freezing the whole hero at a "tablet" size on mobile. These
-            constraints force the row to the column width so overflow-x scrolls. */}
-        <div className="block relative w-full min-w-0 overflow-hidden">
-          {/* Left edge fade */}
-          <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-6 bg-gradient-to-r from-[var(--paper)] to-transparent z-10" />
-          {/* Right edge fade */}
-          <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-6 bg-gradient-to-l from-[var(--paper)] to-transparent z-10" />
-
-          <div
-            ref={thumbStripRef}
-            className="flex gap-2 overflow-x-auto scroll-smooth w-full min-w-0"
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}
-          >
-            {gallery.map((img, i) => img.variantOnly ? null : (
-              <button
-                key={i}
-                onClick={() => setActiveIndex(i)}
-                className={cn(
-                  'relative flex-shrink-0 w-[72px] h-[72px] overflow-hidden rounded-[4px] transition-all duration-200',
-                  i === activeIndex
-                    ? 'ring-2 ring-[var(--accent)] ring-offset-2 ring-offset-[var(--paper)]'
-                    : 'opacity-60 hover:opacity-100'
-                )}
-                aria-label={`View image ${i + 1}: ${img.alt}`}
-                aria-pressed={i === activeIndex}
-              >
-                <div className="absolute inset-0" style={{ background: img.placeholder }} />
-                <ThumbMedia item={img} sizes="72px" />
-                {img.kind === 'video' && (
-                  <span className="absolute bottom-1 right-1 z-10 flex items-center justify-center w-4 h-4 rounded-full bg-black/55">
-                    <svg viewBox="0 0 24 24" width="9" height="9" fill="white" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
-                  </span>
-                )}
-              </button>
-            ))}
-          </div>
+        {/* Thumbnail strip — clean horizontal scroll (no edge fades). min-w-0 + w-full
+            keep the row at the column width so it scrolls instead of widening the hero. */}
+        <div
+          ref={thumbStripRef}
+          className="flex gap-1.5 overflow-x-auto scroll-smooth w-full min-w-0"
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}
+        >
+          {gallery.map((img, i) => img.variantOnly ? null : (
+            <button
+              key={i}
+              onClick={() => setActiveIndex(i)}
+              className={cn(
+                'relative flex-shrink-0 w-14 h-14 overflow-hidden rounded-[5px] transition-all duration-200',
+                i === activeIndex
+                  ? 'ring-2 ring-[var(--ink)]'
+                  : 'opacity-50 hover:opacity-100 ring-1 ring-[var(--ink)]/10'
+              )}
+              aria-label={`View image ${i + 1}: ${img.alt}`}
+              aria-pressed={i === activeIndex}
+            >
+              <div className="absolute inset-0" style={{ background: img.placeholder }} />
+              <ThumbMedia item={img} sizes="56px" />
+              {img.kind === 'video' && (
+                <span className="absolute bottom-1 right-1 z-10 flex items-center justify-center w-4 h-4 rounded-full bg-black/55">
+                  <svg viewBox="0 0 24 24" width="9" height="9" fill="white" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+                </span>
+              )}
+            </button>
+          ))}
         </div>
 
       </div>

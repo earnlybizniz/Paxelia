@@ -21,15 +21,15 @@
 }
 
 @theme inline {
-  /* Typography — retail: Sora (display) + Inter (body). These reference the
+  /* Typography — retail: Poppins (display) + Inter (body). These reference the
      CSS variables exposed by next/font in app/layout.tsx, so the font utilities
      (font-display / font-sans / font-body) actually resolve to the loaded fonts.
      Serif (Playfair) is kept for the academy tenant's headings. */
-  --font-display: var(--font-sora), sans-serif;
+  --font-display: var(--font-poppins), sans-serif;
   --font-sans: var(--font-inter), sans-serif;
   --font-body: var(--font-inter), sans-serif;
   --font-heading-serif: var(--font-playfair), serif;
-  --font-heading-sans: var(--font-sora), sans-serif;
+  --font-heading-sans: var(--font-poppins), sans-serif;
 
   /* 
    * RETAIL DESIGN TOKENS

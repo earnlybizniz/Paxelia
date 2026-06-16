@@ -73,10 +73,10 @@ export function BuyBox() {
           </span>
         </div>
 
-        {/* Product Name (h1) — heavy, uppercase, tight (LEVADESK-style) */}
+        {/* Product Name (h1) — clean, uppercase, tight */}
         <h1
-          className="font-display font-bold uppercase text-[var(--ink)] leading-[1.05] tracking-[-0.01em]"
-          style={{ fontSize: 'clamp(1.9rem, 4.6vw, 2.85rem)' }}
+          className="font-display font-bold uppercase text-[var(--ink)] leading-[1.08] tracking-[-0.005em]"
+          style={{ fontSize: 'clamp(1.5rem, 4vw, 2.05rem)' }}
         >
           {product.name}
         </h1>
@@ -90,26 +90,27 @@ export function BuyBox() {
 
         {/* Rating Row */}
         <Link href="#reviews" className="flex items-center gap-2.5 group w-fit">
-          <StarRating value={product.rating} size={18} />
+          <StarRating value={product.rating} size={17} />
           <span className="font-sans text-[0.9rem] text-[var(--ink-soft)] group-hover:text-[var(--ink)] transition-colors">
-            {product.rating} based on {product.reviewCount.toLocaleString()} reviews
+            <span className="font-semibold text-[var(--ink)]">{product.rating}</span> based on{' '}
+            <span className="font-semibold text-[var(--ink)]">{product.reviewCount.toLocaleString()} reviews</span>
           </span>
         </Link>
       </div>
 
       {/* Price Block */}
-      <div className="flex flex-wrap items-baseline gap-3">
-        <span className="font-display font-semibold text-[2rem] text-green-700 tracking-[-0.02em]">
+      <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+        <span className="font-sans font-bold text-[1.9rem] text-[#15663a] tracking-[-0.01em]">
           {formatCurrency(price)}
         </span>
         {compareAt && compareAt > price && (
-          <span className="font-sans text-[1.1rem] text-[var(--ink-mute)] line-through">
+          <span className="font-sans text-[1.05rem] text-[var(--ink-mute)] line-through">
             {formatCurrency(compareAt)}
           </span>
         )}
         {savings > 0 && (
-          <span className="bg-green-600 text-white px-2 py-0.5 rounded-full font-sans text-[0.75rem] font-semibold">
-            Save {formatCurrency(savings)}
+          <span className="font-sans text-[0.75rem] font-semibold text-[#15663a] bg-[#15663a]/10 px-2 py-1 rounded-md">
+            Save {Math.round((savings / (compareAt || price)) * 100)}%
           </span>
         )}
       </div>
@@ -121,14 +122,14 @@ export function BuyBox() {
 
       {/* Buy Actions */}
       <div className="flex flex-col gap-3 pt-1">
-        {/* Primary — Add to Cart (solid near-black, LEVADESK-style strong CTA) */}
+        {/* Primary — Add to Cart (dark green) */}
         <button
           onClick={handleAddToCart}
           className={cn(
-            'w-full py-4 rounded-[4px] font-sans text-[0.95rem] font-semibold uppercase tracking-wide',
-            'bg-[var(--accent)] text-[var(--paper)]',
-            'hover:bg-[var(--accent-deep)] transition-colors duration-200',
-            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2',
+            'w-full py-4 rounded-[6px] font-sans text-[0.95rem] font-semibold uppercase tracking-wide',
+            'bg-[#14532d] text-white',
+            'hover:bg-[#0f3d22] transition-colors duration-200',
+            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#14532d] focus-visible:ring-offset-2',
             'flex items-center justify-center gap-2'
           )}
         >
@@ -140,7 +141,7 @@ export function BuyBox() {
         <button
           onClick={handleBuyNow}
           className={cn(
-            'w-full py-3.5 rounded-[4px] font-sans text-[0.9rem] font-semibold uppercase tracking-wide',
+            'w-full py-3.5 rounded-[6px] font-sans text-[0.9rem] font-semibold uppercase tracking-wide',
             'border border-[var(--ink)] text-[var(--ink)]',
             'hover:bg-[var(--ink)]/[0.05] transition-colors duration-200',
             'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ink)] focus-visible:ring-offset-2'

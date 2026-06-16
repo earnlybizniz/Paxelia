@@ -32,13 +32,13 @@
 
 export const POLICY_CONFIG = {
   // ── Brand / contact ─────────────────────────────────────────────────────────
-  brandName:          'Wylorise',
-  legalEntity:        'Wylorise LLC',
-  siteUrl:            'https://wylorise.store',
-  supportEmail:       'support@wylorise.store',
-  contactAddress:     '11 S Kansas Ave, Guernsey, WY 82214, US',
+  brandName:          'Snapsticker',
+  legalEntity:        'Snapsticker LLC',
+  siteUrl:            'https://snapsticker.store',
+  supportEmail:       'contact@snapsticker.store',
+  contactAddress:     '30 N Gould St, Suite #318, Sheridan, WY 82801, US',
   governingLawRegion: 'State of Wyoming, USA',
-  lastUpdated:        '2026-06-09',             // ISO date — shown on each page
+  lastUpdated:        '2026-06-16',             // ISO date — shown on each page
 
   // ── Merchant of Record ───────────────────────────────────────────────────────
   merchantOfRecord:   'Whop',
@@ -47,15 +47,15 @@ export const POLICY_CONFIG = {
   // ── Refund / returns ─────────────────────────────────────────────────────────
   trialDays:              30,
   returnWindowDays:       30,
-  refundProcessingDays:   '5–10 business days',
+  refundProcessingDays:   '5–15 business days',
   whoPaysReturnShipping:  'merchant' as 'merchant' | 'customer',
   restockingFeePct:       0,                    // 0 = no restocking fee
   nonReturnable:          ['final-sale items'],
 
   // ── Shipping ─────────────────────────────────────────────────────────────────
   shippingRegions:       ['the 48 contiguous United States'],
-  processingTime:        '1–2 business days',
-  deliveryEstimate:      '5–12 business days',
+  processingTime:        '2 business days',
+  deliveryEstimate:      '10–14 business days',
   shippingCost:          'Free standard shipping on all orders within the 48 contiguous US states',
   carrier:               'FedEx',
   tracking:              true,
@@ -70,8 +70,8 @@ export const POLICY_CONFIG = {
   gdprApplies:           false,
 
   // ── Company / product ────────────────────────────────────────────────────────
-  productType:    'bamboo standing desks',
-  warrantyYears:  15,
+  productType:    'dual-level standing desks',
+  warrantyYears:  10,
 } as const
 
 export type PolicyConfig = typeof POLICY_CONFIG

@@ -45,16 +45,9 @@ export function VariantSelector() {
 
             {/* Options */}
             {axis.type === 'card' ? (
-              <div
-                className="grid gap-2 min-w-0"
-                style={{ gridTemplateColumns: `repeat(${Math.min(axis.options.length, 3)}, minmax(0, 1fr))` }}
-                role="radiogroup"
-                aria-label={axis.label}
-              >
+              <div className="flex flex-wrap gap-2" role="radiogroup" aria-label={axis.label}>
                 {axis.options.map((option) => {
                   const isSelected = selection[axis.key] === option.id
-                  const isDefault = option.default
-
                   return (
                     <button
                       key={option.id}
@@ -63,49 +56,14 @@ export function VariantSelector() {
                       role="radio"
                       aria-checked={isSelected}
                       className={cn(
-                        'relative flex flex-col items-center gap-0.5 px-3 py-3 rounded-[6px] border transition-all duration-200 min-w-0',
+                        'px-4 py-2.5 rounded-[6px] border font-sans text-[0.9rem] font-medium transition-all duration-200',
                         isSelected
-                          ? 'border-[var(--ink)] bg-[var(--ink)]'
-                          : 'border-[var(--ink)]/20 bg-[var(--paper)] hover:border-[var(--ink)]/45',
-                        option.soldOut && 'opacity-50 cursor-not-allowed'
+                          ? 'border-[var(--ink)] bg-[var(--ink)] text-[var(--paper)]'
+                          : 'border-[var(--ink)]/25 bg-[var(--paper)] text-[var(--ink)] hover:border-[var(--ink)]/50',
+                        option.soldOut && 'opacity-50 cursor-not-allowed line-through'
                       )}
                     >
-                      {/* Most Popular tag */}
-                      {isDefault && !isSelected && (
-                        <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 bg-[var(--ink)] text-[var(--paper)] px-2 py-0.5 rounded-full font-sans text-[0.6rem] font-medium whitespace-nowrap">
-                          Most popular
-                        </span>
-                      )}
-
-                      <span className={cn(
-                        'font-sans font-semibold',
-                        isSelected ? 'text-[var(--paper)]' : 'text-[var(--ink)]'
-                      )}>
-                        {option.label}
-                      </span>
-
-                      {option.sub && (
-                        <span className={cn(
-                          'font-sans text-[0.7rem] font-medium',
-                          isSelected ? 'text-[var(--paper)]/70' : 'text-[var(--ink-soft)]'
-                        )}>
-                          {option.sub}
-                        </span>
-                      )}
-
-                      {/* Absolute price for this size (basePrice + delta) */}
-                      <span className={cn(
-                        'font-sans text-[0.8rem] font-semibold',
-                        isSelected ? 'text-[var(--paper)]' : 'text-green-700'
-                      )}>
-                        {formatCurrency(product.basePrice + option.priceDelta)}
-                      </span>
-
-                      {option.soldOut && (
-                        <span className="font-sans text-[0.65rem] text-[var(--ink-mute)] line-through">
-                          Sold out
-                        </span>
-                      )}
+                      {option.label}
                     </button>
                   )
                 })}

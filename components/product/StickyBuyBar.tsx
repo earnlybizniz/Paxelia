@@ -132,8 +132,8 @@ export function StickyBuyBar() {
                   onClick={handleAddToCart}
                   className={cn(
                     'px-4 md:px-6 py-2.5 md:py-3 rounded-[4px]',
-                    'bg-[var(--accent)] text-[var(--paper)] font-sans text-[0.85rem] md:text-[0.9rem] font-medium',
-                    'hover:bg-[var(--accent-deep)] transition-colors',
+                    'bg-[#14532d] text-white font-sans text-[0.85rem] md:text-[0.9rem] font-semibold',
+                    'hover:bg-[#0f3d22] transition-colors',
                     'whitespace-nowrap'
                   )}
                 >
