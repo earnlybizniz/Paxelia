@@ -1,42 +1,33 @@
 import type { Metadata, Viewport } from 'next'
 import { POLICY_CONFIG as C } from '@/lib/policies-config'
-import { Outfit, Playfair_Display, Space_Grotesk, Inter } from 'next/font/google'
+import { Sora, Inter, Playfair_Display } from 'next/font/google'
 import './globals.css'
 
-// Display + body fonts for the retail tenant (Wylorise)
-const display = Space_Grotesk({
+// Retail tenant (Snapsticker): Sora = display/headings, Inter = body.
+// Each exposes a CSS variable that globals.css @theme maps the font utilities to.
+const sora = Sora({
   subsets: ['latin'],
-  variable: '--font-display',
+  variable: '--font-sora',
   display: 'swap',
-})
-
-const outfit = Outfit({
-  subsets: ['latin'],
-  variable: '--font-sans',
-  display: 'swap',
-})
-
-// Legacy fonts for academy tenant
-const playfair = Playfair_Display({
-  subsets: ['latin'],
-  variable: '--font-heading-serif',
-})
-
-const spaceGrotesk = Space_Grotesk({
-  subsets: ['latin'],
-  variable: '--font-heading-sans',
 })
 
 const inter = Inter({
   subsets: ['latin'],
-  variable: '--font-body',
+  variable: '--font-inter',
+  display: 'swap',
+})
+
+// Serif kept for the academy tenant's headings (--font-heading-serif).
+const playfair = Playfair_Display({
+  subsets: ['latin'],
+  variable: '--font-playfair',
+  display: 'swap',
 })
 
 export const metadata: Metadata = {
   title: C.brandName,
-  description: "A real bamboo standing desk — everything you need, nothing you don't, at the price it should have been.",
-  // Favicon — shared across both storefronts (retail + academy).
-  // Served from /public/favicon.png.
+  description: "An electric dual-level sit-stand desk — sit, stand, present, and everything you need, built in.",
+  // Favicon — shared across both storefronts (retail + academy). Served from /public/favicon.png.
   icons: {
     icon: [
       { url: '/favicon.png', type: 'image/png' },
@@ -59,7 +50,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${display.variable} ${outfit.variable} ${playfair.variable} ${spaceGrotesk.variable} ${inter.variable}`}>
+    <html lang="en" className={`${sora.variable} ${inter.variable} ${playfair.variable}`}>
       <body className="font-body bg-background text-foreground antialiased">
         {children}
       </body>

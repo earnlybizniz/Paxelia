@@ -73,26 +73,33 @@ export function BuyBox() {
           </span>
         </div>
 
-        {/* Product Name (h1) */}
+        {/* Product Name (h1) — heavy, uppercase, tight (LEVADESK-style) */}
         <h1
-          className="font-display font-normal text-[var(--ink)] leading-[1.04] tracking-[-0.02em]"
-          style={{ fontSize: 'clamp(2rem, 4vw, 3rem)' }}
+          className="font-display font-bold uppercase text-[var(--ink)] leading-[1.05] tracking-[-0.01em]"
+          style={{ fontSize: 'clamp(1.9rem, 4.6vw, 2.85rem)' }}
         >
           {product.name}
         </h1>
 
+        {/* Tagline */}
+        {product.eyebrow && (
+          <p className="font-sans text-[0.95rem] text-[var(--ink-soft)] leading-snug max-w-prose">
+            {product.eyebrow}
+          </p>
+        )}
+
         {/* Rating Row */}
-        <Link href="#reviews" className="flex items-center gap-3 group w-fit">
+        <Link href="#reviews" className="flex items-center gap-2.5 group w-fit">
           <StarRating value={product.rating} size={18} />
           <span className="font-sans text-[0.9rem] text-[var(--ink-soft)] group-hover:text-[var(--ink)] transition-colors">
-            {product.rating} · {product.reviewCount.toLocaleString()} reviews
+            {product.rating} based on {product.reviewCount.toLocaleString()} reviews
           </span>
         </Link>
       </div>
 
       {/* Price Block */}
       <div className="flex flex-wrap items-baseline gap-3">
-        <span className="font-display text-[2rem] text-green-700 tracking-[-0.02em]">
+        <span className="font-display font-semibold text-[2rem] text-green-700 tracking-[-0.02em]">
           {formatCurrency(price)}
         </span>
         {compareAt && compareAt > price && (
@@ -101,7 +108,7 @@ export function BuyBox() {
           </span>
         )}
         {savings > 0 && (
-          <span className="bg-[var(--accent)] text-[var(--paper)] px-2 py-0.5 rounded-full font-sans text-[0.75rem] font-medium">
+          <span className="bg-green-600 text-white px-2 py-0.5 rounded-full font-sans text-[0.75rem] font-semibold">
             Save {formatCurrency(savings)}
           </span>
         )}
@@ -114,18 +121,18 @@ export function BuyBox() {
 
       {/* Buy Actions */}
       <div className="flex flex-col gap-3 pt-1">
-        {/* Primary — Add to Cart */}
+        {/* Primary — Add to Cart (solid near-black, LEVADESK-style strong CTA) */}
         <button
           onClick={handleAddToCart}
           className={cn(
-            'w-full py-4 rounded-[3px] font-sans text-[1rem] font-medium',
+            'w-full py-4 rounded-[4px] font-sans text-[0.95rem] font-semibold uppercase tracking-wide',
             'bg-[var(--accent)] text-[var(--paper)]',
             'hover:bg-[var(--accent-deep)] transition-colors duration-200',
             'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2',
             'flex items-center justify-center gap-2'
           )}
         >
-          <ShoppingCart size={18} strokeWidth={1.5} />
+          <ShoppingCart size={18} strokeWidth={1.75} />
           <span>Add to cart — {formatCurrency(price)}</span>
         </button>
 
@@ -133,10 +140,10 @@ export function BuyBox() {
         <button
           onClick={handleBuyNow}
           className={cn(
-            'w-full py-3.5 rounded-[3px] font-sans text-[0.95rem] font-medium',
-            'border border-[var(--accent)] text-[var(--accent)]',
-            'hover:bg-[var(--accent)]/6 transition-colors duration-200',
-            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2'
+            'w-full py-3.5 rounded-[4px] font-sans text-[0.9rem] font-semibold uppercase tracking-wide',
+            'border border-[var(--ink)] text-[var(--ink)]',
+            'hover:bg-[var(--ink)]/[0.05] transition-colors duration-200',
+            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ink)] focus-visible:ring-offset-2'
           )}
         >
           Buy it now

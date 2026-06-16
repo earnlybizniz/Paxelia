@@ -63,10 +63,10 @@ export function VariantSelector() {
                       role="radio"
                       aria-checked={isSelected}
                       className={cn(
-                        'relative flex flex-col items-center gap-1 p-3 rounded-[6px] border-2 transition-all duration-200 min-w-0',
+                        'relative flex flex-col items-center gap-0.5 px-3 py-3 rounded-[6px] border transition-all duration-200 min-w-0',
                         isSelected
-                          ? 'border-[var(--accent)] bg-[var(--accent)]/5'
-                          : 'border-[var(--ink)]/10 hover:border-[var(--accent)]/50',
+                          ? 'border-[var(--ink)] bg-[var(--ink)]'
+                          : 'border-[var(--ink)]/20 bg-[var(--paper)] hover:border-[var(--ink)]/45',
                         option.soldOut && 'opacity-50 cursor-not-allowed'
                       )}
                     >
@@ -78,21 +78,25 @@ export function VariantSelector() {
                       )}
 
                       <span className={cn(
-                        'font-sans font-medium',
-                        isSelected ? 'text-[var(--ink)]' : 'text-[var(--ink-soft)]'
+                        'font-sans font-semibold',
+                        isSelected ? 'text-[var(--paper)]' : 'text-[var(--ink)]'
                       )}>
                         {option.label}
                       </span>
 
                       {option.sub && (
-                        <span className="font-sans text-[0.7rem] font-bold text-[var(--ink-soft)]">
+                        <span className={cn(
+                          'font-sans text-[0.7rem] font-medium',
+                          isSelected ? 'text-[var(--paper)]/70' : 'text-[var(--ink-soft)]'
+                        )}>
                           {option.sub}
                         </span>
                       )}
 
                       {/* Absolute price for this size (basePrice + delta) */}
                       <span className={cn(
-                        'font-sans text-[0.8rem] font-semibold text-green-700',
+                        'font-sans text-[0.8rem] font-semibold',
+                        isSelected ? 'text-[var(--paper)]' : 'text-green-700'
                       )}>
                         {formatCurrency(product.basePrice + option.priceDelta)}
                       </span>

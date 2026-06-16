@@ -156,7 +156,7 @@ export const ALDER_PRODUCT: Product = {
         // price    = basePrice + priceDelta   → 99.99 / 139.99 / 189.99
         // compareAt = compareAt + compareDelta → 499.99 / 699.99 / 899.99
         {
-          id: 'sm', label: 'Compact', sub: '120 × 60 cm · 47 × 24 in', image: '/images/product/gallery/size-standard.png',
+          id: 'sm', label: 'Compact', sub: '120 × 60 cm · 47 × 24 in',
           tagline: 'Single-monitor setups & tighter rooms',
           priceDelta: -40, compareDelta: -200,                 // 99.99 (was 499.99)
           specs: [
@@ -166,7 +166,7 @@ export const ALDER_PRODUCT: Product = {
           ],
         },
         {
-          id: 'md', label: 'Pro', sub: '140 × 68 cm · 55 × 27 in', image: '/images/product/gallery/size-pro.png',
+          id: 'md', label: 'Pro', sub: '140 × 68 cm · 55 × 27 in',
           tagline: 'Room for dual monitors — the popular pick',
           priceDelta: 0, compareDelta: 0, default: true,       // 139.99 (was 699.99)
           specs: [
@@ -176,7 +176,7 @@ export const ALDER_PRODUCT: Product = {
           ],
         },
         {
-          id: 'lg', label: 'Studio', sub: '160 × 75 cm · 63 × 30 in', image: '/images/product/gallery/size-executive.png',
+          id: 'lg', label: 'Studio', sub: '160 × 75 cm · 63 × 30 in',
           tagline: 'Widest top — triple-monitor & creative setups',
           priceDelta: 50, compareDelta: 200,                   // 189.99 (was 899.99)
           specs: [
@@ -203,25 +203,20 @@ export const ALDER_PRODUCT: Product = {
     },
   ],
 
-  // One flat gallery (no galleryByFinish). The size options' `image` points at a
-  // size-guide entry; selecting a size jumps the gallery to it. gallery[0] is the
-  // default hero + the cart/email fallback image.
+  // One flat gallery of optimized 1200x1200 WebP product photos (all browsable —
+  // no variant-only entries). gallery[0] is the default hero and the cart/email
+  // fallback image.
   gallery: [
-    // ── Browsable product photos (gallery thumbnails) — regenerated for the Apex
-    //    in the image batch; filenames kept so paths never change. ──
-    { src: '/images/product/gallery/pdp-02.jpg', alt: 'The Snapsticker Apex dual-level electric standing desk with a warm wood top and black frame, styled with a monitor in a modern home office', placeholder: 'linear-gradient(135deg, #efe7da 0%, #a9743f 100%)', ratio: '1/1' },
-    { src: '/images/product/gallery/pdp-03.jpg', alt: 'The Snapsticker Apex raised to standing height with the upper monitor shelf in use', placeholder: 'linear-gradient(135deg, #ece4d6 0%, #6f4a26 100%)', ratio: '1/1' },
-    { src: '/images/product/gallery/pdp-04.jpg', alt: 'The Snapsticker Apex with the magnetic pegboard holding accessories above the desktop', placeholder: 'linear-gradient(135deg, #e5e2dc 0%, #1a1a1a 100%)', ratio: '1/1' },
-    { src: '/images/product/gallery/pdp-05.jpg', alt: 'Close-up of the built-in desktop power outlet and USB ports on the Snapsticker Apex', placeholder: 'linear-gradient(135deg, #efe7da 0%, #8a5a2b 100%)', ratio: '1/1' },
-    { src: '/images/product/gallery/pdp-06.jpg', alt: 'The Snapsticker Apex with the task light and RGB ambient lighting on in a dim room', placeholder: 'linear-gradient(135deg, #e8dcc2 0%, #2a2a2a 100%)', ratio: '1/1' },
-    { src: '/images/product/gallery/pdp-07.jpg', alt: 'The Snapsticker Apex on its lockable casters with the modular storage drawer open', placeholder: 'linear-gradient(135deg, #f0e7d6 0%, #a9743f 100%)', ratio: '1/1' },
-    { src: '/images/product/gallery/pdp-08.jpg', alt: 'The Snapsticker Apex at sitting height in a sunlit office with an ergonomic chair', placeholder: 'linear-gradient(135deg, #e6d9bd 0%, #6f4a26 100%)', ratio: '1/1' },
-
-    // ── Size guides (NOT browsable) — surfaced only when their size is selected.
-    //    Filenames kept; regenerated in the image batch. ──
-    { src: '/images/product/gallery/size-standard.png', alt: 'Size guide — Compact: 120 × 60 cm (47 × 24 in) top, electric 30–55.9″ height range', placeholder: 'linear-gradient(135deg, #ffffff 0%, #f0e7d6 100%)', ratio: '1/1', variantOnly: true },
-    { src: '/images/product/gallery/size-pro.png', alt: 'Size guide — Pro: 140 × 68 cm (55 × 27 in) top, electric 30–55.9″ height range', placeholder: 'linear-gradient(135deg, #ffffff 0%, #f0e7d6 100%)', ratio: '1/1', variantOnly: true },
-    { src: '/images/product/gallery/size-executive.png', alt: 'Size guide — Studio: 160 × 75 cm (63 × 30 in) top, electric 30–55.9″ height range', placeholder: 'linear-gradient(135deg, #ffffff 0%, #f0e7d6 100%)', ratio: '1/1', variantOnly: true },
+    { src: '/images/product/gallery/gallery-01.webp', alt: 'Snapsticker Apex dual-level electric standing desk — front view with dual monitors on the upper shelf and accessories on the magnetic pegboard', placeholder: 'linear-gradient(135deg, #efe7da 0%, #a9743f 100%)', ratio: '1/1' },
+    { src: '/images/product/gallery/gallery-02.webp', alt: 'Snapsticker Apex raised to standing height — three-quarter view showing the upper shelf, main desk, side drawers and laptop tray', placeholder: 'linear-gradient(135deg, #ece4d6 0%, #6f4a26 100%)', ratio: '1/1' },
+    { src: '/images/product/gallery/gallery-03.webp', alt: 'Snapsticker Apex with the upper monitor shelf raised high above the main work surface', placeholder: 'linear-gradient(135deg, #e8dcc2 0%, #8a5a2b 100%)', ratio: '1/1' },
+    { src: '/images/product/gallery/gallery-04.webp', alt: 'Snapsticker Apex shown bare — the dual-level frame, black magnetic pegboard, side drawers and pull-out tray', placeholder: 'linear-gradient(135deg, #e5e2dc 0%, #1a1a1a 100%)', ratio: '1/1' },
+    { src: '/images/product/gallery/gallery-05.webp', alt: 'Snapsticker Apex rear three-quarter view with the RGB ambient light glowing behind the upper deck', placeholder: 'linear-gradient(135deg, #e8dcc2 0%, #2a2a2a 100%)', ratio: '1/1' },
+    { src: '/images/product/gallery/gallery-06.webp', alt: 'Top-down view of the Snapsticker Apex wood worktop with the smart touch panel and built-in outlets at the edge', placeholder: 'linear-gradient(135deg, #f0e7d6 0%, #a9743f 100%)', ratio: '1/1' },
+    { src: '/images/product/gallery/gallery-07.webp', alt: 'Snapsticker Apex feature map — dual AC outlets, wireless charging pad, modular pegboard, smart touch panel, hook rack, silent drawer and PC case stand labelled', placeholder: 'linear-gradient(135deg, #f6f5f3 0%, #d8c19a 100%)', ratio: '1/1' },
+    { src: '/images/product/gallery/gallery-08.webp', alt: 'Snapsticker Apex annotated overview with monitors — pegboard, monitor stand, ambient light strip, snack and cup holder, outlets and storage labelled', placeholder: 'linear-gradient(135deg, #f6f5f3 0%, #cdb083 100%)', ratio: '1/1' },
+    { src: '/images/product/gallery/gallery-09.webp', alt: 'Snapsticker Apex in a sunlit home office, raised to standing height while in use', placeholder: 'linear-gradient(135deg, #efe7da 0%, #6f4a26 100%)', ratio: '1/1' },
+    { src: '/images/product/gallery/gallery-10.webp', alt: 'Snapsticker Apex in a home workspace with dual monitors and a pegboard of accessories, used at standing height', placeholder: 'linear-gradient(135deg, #e6d9bd 0%, #8a5a2b 100%)', ratio: '1/1' },
   ],
 
   highlights: [
