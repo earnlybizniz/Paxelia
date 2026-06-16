@@ -126,16 +126,16 @@ export type Product = {
 }
 
 // ============================================================
-// WYLORISE PRODUCT
+// SNAPSTICKER PRODUCT
 // NOTE: export const name kept as ALDER_PRODUCT — it is imported by the
 // webhook (money path) and several components. Only its CONTENTS change.
 // ============================================================
 export const ALDER_PRODUCT: Product = {
-  slug: 'wylorise-sovereign-q8',
-  name: 'The Sovereign Q8',
-  brand: 'Wylorise',
-  eyebrow: "Everything you need in a standing desk. Nothing you don't.",
-  basePrice: 139.99,      // The Pro (md) = default
+  slug: 'snapsticker-apex',
+  name: 'Snapsticker Apex',
+  brand: 'Snapsticker',
+  eyebrow: 'One desk that rises, transforms, and powers your whole workspace.',
+  basePrice: 139.99,      // Pro (md) = default
   compareAt: 699.99,      // Pro was-price; per-size overrides via compareDelta below
   currency: 'USD',
   // ── Rating + count derive from REVIEW_SUMMARY (lib/reviews-data.ts) ──
@@ -143,7 +143,7 @@ export const ALDER_PRODUCT: Product = {
   reviewCount: REVIEW_SUMMARY.count,
   soldThisMonth: 140,     // PLACEHOLDER
   viewingNow: 22,         // PLACEHOLDER
-  badges: ['Award-Winning Design', 'Wireless Charging Built In', '15-Year Frame Warranty'],
+  badges: ['Dual-Level Workspace', 'Electric Sit-Stand · Dual Motor', '10-Year Warranty'],
 
   axes: [
     {
@@ -156,145 +156,145 @@ export const ALDER_PRODUCT: Product = {
         // price    = basePrice + priceDelta   → 99.99 / 139.99 / 189.99
         // compareAt = compareAt + compareDelta → 499.99 / 699.99 / 899.99
         {
-          id: 'sm', label: 'Standard', sub: '55 × 28 in', image: '/images/product/gallery/size-standard.png',
+          id: 'sm', label: 'Compact', sub: '120 × 60 cm · 47 × 24 in', image: '/images/product/gallery/size-standard.png',
           tagline: 'Single-monitor setups & tighter rooms',
           priceDelta: -40, compareDelta: -200,                 // 99.99 (was 499.99)
           specs: [
-            { label: 'Desktop Size', value: '55" W × 28" D' },
-            { label: 'Height Range', value: '23.6" – 48.8"' },
+            { label: 'Dimensions (W×D×H)', value: '120 × 60 × 82 cm · 47 × 24 × 32 in' },
+            { label: 'Height Range', value: '30–55.9″ (76–142 cm), electric' },
             { label: 'Best For', value: 'Laptop or single monitor' },
           ],
         },
         {
-          id: 'md', label: 'Pro', sub: '63 × 30 in', image: '/images/product/gallery/size-pro.png',
+          id: 'md', label: 'Pro', sub: '140 × 68 cm · 55 × 27 in', image: '/images/product/gallery/size-pro.png',
           tagline: 'Room for dual monitors — the popular pick',
           priceDelta: 0, compareDelta: 0, default: true,       // 139.99 (was 699.99)
           specs: [
-            { label: 'Desktop Size', value: '63" W × 30" D' },
-            { label: 'Height Range', value: '22.8" – 49.2"' },
+            { label: 'Dimensions (W×D×H)', value: '140 × 68 × 82 cm · 55 × 27 × 32 in' },
+            { label: 'Height Range', value: '30–55.9″ (76–142 cm), electric' },
             { label: 'Best For', value: 'Dual-monitor setups' },
           ],
         },
         {
-          id: 'lg', label: 'Executive', sub: '72 × 30 in', image: '/images/product/gallery/size-executive.png',
-          tagline: 'Widest top — triple-monitor & executive setups',
+          id: 'lg', label: 'Studio', sub: '160 × 75 cm · 63 × 30 in', image: '/images/product/gallery/size-executive.png',
+          tagline: 'Widest top — triple-monitor & creative setups',
           priceDelta: 50, compareDelta: 200,                   // 189.99 (was 899.99)
           specs: [
-            { label: 'Desktop Size', value: '72" W × 30" D' },
-            { label: 'Height Range', value: '22.8" – 49.2"' },
-            { label: 'Best For', value: 'Triple-monitor / executive' },
+            { label: 'Dimensions (W×D×H)', value: '160 × 75 × 82 cm · 63 × 30 × 32 in' },
+            { label: 'Height Range', value: '30–55.9″ (76–142 cm), electric' },
+            { label: 'Best For', value: 'Triple-monitor / creative' },
           ],
         },
       ],
     },
     {
       key: 'finish',
-      label: 'Frame color',
+      label: 'Finish',
       type: 'swatch',
       options: [
-        // ids MUST stay white / mocha — these flow into the cart finishId
-        // ('white' | 'mocha'), the cart drawer, checkout summary, and order
-        // emails. priceDelta + compareDelta are 0 on BOTH: the frame colour
-        // never changes the price or the Whop plan (plans are size-only).
-        { id: 'white', label: 'White', swatch: '#e6e3dc', image: '/images/product/gallery/frame-white.png', priceDelta: 0, compareDelta: 0, default: true },
-        { id: 'mocha', label: 'Black', swatch: '#1b1a17', image: '/images/product/gallery/frame-black.png', priceDelta: 0, compareDelta: 0 },
+        // The Snapsticker Apex ships in ONE colorway — a warm wood top with a black frame.
+        // It is kept as a single-option axis (the internal id 'white' is retained as the key
+        // so the cart, checkout, Whop metadata, and order emails stay byte-for-byte unchanged).
+        // The VariantSelector hides single-option axes, so NO colour picker is shown — the
+        // customer just sees the size selector. The label below is what appears in the cart
+        // summary and order emails ("Finish: Oak & Black").
+        { id: 'white', label: 'Oak & Black', swatch: '#a9743f', priceDelta: 0, compareDelta: 0, default: true },
       ],
     },
   ],
 
-  // Frame colours AND sizes share ONE flat gallery (no galleryByFinish). Each
-  // frame/size option's `image` points at a gallery entry; selecting it jumps
-  // the gallery to that image (see setOption in contexts/product-context.tsx).
-  // gallery[0] is the default hero + the cart/email fallback image.
+  // One flat gallery (no galleryByFinish). The size options' `image` points at a
+  // size-guide entry; selecting a size jumps the gallery to it. gallery[0] is the
+  // default hero + the cart/email fallback image.
   gallery: [
-    // ── Browsable product photos (these are the gallery thumbnails) ──�����──────
-    { src: '/images/product/gallery/pdp-02.jpg', alt: 'The Wylorise Sovereign Q8 with a natural bamboo top and white frame, styled with a monitor in a warm home office', placeholder: 'linear-gradient(135deg, #efe6d3 0%, #c19a52 100%)', ratio: '1/1' },
-    { src: '/images/product/gallery/pdp-03.jpg', alt: 'The Sovereign Q8 in a bright, sunlit room with a laptop, desk lamp, and coffee', placeholder: 'linear-gradient(135deg, #f4efe3 0%, #cda158 100%)', ratio: '1/1' },
-    { src: '/images/product/gallery/pdp-04.jpg', alt: 'The Sovereign Q8 paired with an ergonomic chair in a modern home office', placeholder: 'linear-gradient(135deg, #ece4d6 0%, #b98f4e 100%)', ratio: '1/1' },
-    { src: '/images/product/gallery/pdp-05.jpg', alt: 'Overhead view of the natural bamboo desktop with the built-in wireless charging spot', placeholder: 'linear-gradient(135deg, #efe6d3 0%, #cda158 100%)', ratio: '1/1' },
-    { src: '/images/product/gallery/pdp-06.jpg', alt: 'Overhead view of the desk in use with a laptop, coffee, and a phone charging on the surface', placeholder: 'linear-gradient(135deg, #e8dcc2 0%, #a06d28 100%)', ratio: '1/1' },
-    { src: '/images/product/gallery/pdp-07.jpg', alt: 'The Sovereign Q8 used as a vanity table in a bright bedroom', placeholder: 'linear-gradient(135deg, #f0e7d6 0%, #c9a24b 100%)', ratio: '1/1' },
-    { src: '/images/product/gallery/pdp-08.jpg', alt: 'The Sovereign Q8 at sitting height in a sunlit office with an ergonomic chair', placeholder: 'linear-gradient(135deg, #e6d9bd 0%, #b07a2e 100%)', ratio: '1/1' },
+    // ── Browsable product photos (gallery thumbnails) — regenerated for the Apex
+    //    in the image batch; filenames kept so paths never change. ──
+    { src: '/images/product/gallery/pdp-02.jpg', alt: 'The Snapsticker Apex dual-level electric standing desk with a warm wood top and black frame, styled with a monitor in a modern home office', placeholder: 'linear-gradient(135deg, #efe7da 0%, #a9743f 100%)', ratio: '1/1' },
+    { src: '/images/product/gallery/pdp-03.jpg', alt: 'The Snapsticker Apex raised to standing height with the upper monitor shelf in use', placeholder: 'linear-gradient(135deg, #ece4d6 0%, #6f4a26 100%)', ratio: '1/1' },
+    { src: '/images/product/gallery/pdp-04.jpg', alt: 'The Snapsticker Apex with the magnetic pegboard holding accessories above the desktop', placeholder: 'linear-gradient(135deg, #e5e2dc 0%, #1a1a1a 100%)', ratio: '1/1' },
+    { src: '/images/product/gallery/pdp-05.jpg', alt: 'Close-up of the built-in desktop power outlet and USB ports on the Snapsticker Apex', placeholder: 'linear-gradient(135deg, #efe7da 0%, #8a5a2b 100%)', ratio: '1/1' },
+    { src: '/images/product/gallery/pdp-06.jpg', alt: 'The Snapsticker Apex with the task light and RGB ambient lighting on in a dim room', placeholder: 'linear-gradient(135deg, #e8dcc2 0%, #2a2a2a 100%)', ratio: '1/1' },
+    { src: '/images/product/gallery/pdp-07.jpg', alt: 'The Snapsticker Apex on its lockable casters with the modular storage drawer open', placeholder: 'linear-gradient(135deg, #f0e7d6 0%, #a9743f 100%)', ratio: '1/1' },
+    { src: '/images/product/gallery/pdp-08.jpg', alt: 'The Snapsticker Apex at sitting height in a sunlit office with an ergonomic chair', placeholder: 'linear-gradient(135deg, #e6d9bd 0%, #6f4a26 100%)', ratio: '1/1' },
 
-    // ── Variant shots (NOT browsable) — surfaced only when their size/frame is
-    //    selected. setOption() in product-context jumps the viewer here by src;
-    //    Gallery hides any image flagged variantOnly from the thumbnail strip.
-    //    Keep these LAST so the browsable photos stay contiguous at the front. ──
-    { src: '/images/product/gallery/frame-white.png', alt: 'The Wylorise Sovereign Q8 with the white frame and a natural bamboo top — full studio view', placeholder: 'linear-gradient(135deg, #f3ecdd 0%, #cda158 100%)', ratio: '1/1', variantOnly: true },
-    { src: '/images/product/gallery/frame-black.png', alt: 'The Wylorise Sovereign Q8 with the black frame and a natural bamboo top — full studio view', placeholder: 'linear-gradient(135deg, #e5e2dc 0%, #1b1a17 100%)', ratio: '1/1', variantOnly: true },
-    { src: '/images/product/gallery/size-standard.png', alt: 'Size guide — The Standard: 55 by 28 inch top, 23.6 to 48.8 inch height range', placeholder: 'linear-gradient(135deg, #ffffff 0%, #f0e7d6 100%)', ratio: '1/1', variantOnly: true },
-    { src: '/images/product/gallery/size-pro.png', alt: 'Size guide — The Pro: 63 by 30 inch top, 22.8 to 49.2 inch height range', placeholder: 'linear-gradient(135deg, #ffffff 0%, #f0e7d6 100%)', ratio: '1/1', variantOnly: true },
-    { src: '/images/product/gallery/size-executive.png', alt: 'Size guide — The Executive: 72 by 30 inch top, 22.8 to 49.2 inch height range', placeholder: 'linear-gradient(135deg, #ffffff 0%, #f0e7d6 100%)', ratio: '1/1', variantOnly: true },
+    // ── Size guides (NOT browsable) — surfaced only when their size is selected.
+    //    Filenames kept; regenerated in the image batch. ──
+    { src: '/images/product/gallery/size-standard.png', alt: 'Size guide — Compact: 120 × 60 cm (47 × 24 in) top, electric 30–55.9″ height range', placeholder: 'linear-gradient(135deg, #ffffff 0%, #f0e7d6 100%)', ratio: '1/1', variantOnly: true },
+    { src: '/images/product/gallery/size-pro.png', alt: 'Size guide — Pro: 140 × 68 cm (55 × 27 in) top, electric 30–55.9″ height range', placeholder: 'linear-gradient(135deg, #ffffff 0%, #f0e7d6 100%)', ratio: '1/1', variantOnly: true },
+    { src: '/images/product/gallery/size-executive.png', alt: 'Size guide — Studio: 160 × 75 cm (63 × 30 in) top, electric 30–55.9″ height range', placeholder: 'linear-gradient(135deg, #ffffff 0%, #f0e7d6 100%)', ratio: '1/1', variantOnly: true },
   ],
 
   highlights: [
-    'Natural bamboo top with a protective lacquer — about twice as hard as traditional wood, and naturally water- and scratch-resistant',
-    'Dual-motor, three-stage oval legs raise and lower smoothly and hold steady up to a full 220 lb',
-    'Built-in 10W wireless charging pad plus USB-A and USB-C ports, right on the front touch console',
-    'Four programmable height presets and anti-collision detection — your perfect heights at one tap, safely',
-    "Award-winning design at factory-direct pricing — everything you need, nothing you don't, at the price it should have been",
+    'Dual-level workspace — a main desk plus an integrated monitor shelf and workbench, so a clamp, a screen, and your tools all have a home (up to ~50% space saved)',
+    'Electric dual-motor sit-stand lift with a 30–55.9″ (76–142 cm) range — move between sitting, standing, and presentation modes at the push of a button',
+    'Magnetic pegboard, modular drawer, and side accessories let you reconfigure storage around how you actually work',
+    'Built-in power — a desktop outlet plus an external power strip — so charging happens on the desk, not in a tangle underneath it',
+    'High-brightness task light and RGB ambient light, a heavy-duty steel-and-aluminum frame rated to 50 kg (110 lb), and lockable 60 mm casters to roll it anywhere',
   ],
 
   description: [
-    "Most standing desks are priced like a luxury — laminate tops, hollow frames, and a short list of features stretched across a long price tag. The Wylorise Sovereign Q8 takes the opposite approach: a real natural-bamboo surface and the features people actually use, sold factory-direct so you pay for the desk and not the markup.",
-    "The top is genuine bamboo, sealed with a protective lacquer that makes it roughly twice as hard as traditional wood and naturally resistant to water and scratches. Bamboo is a fast-renewing grass, so the surface is as sustainable as it is warm to look at. Set into the front edge is a touch console with a built-in wireless charging pad and both USB-A and USB-C ports, so your phone and peripherals stay powered without a tangle of cables.",
-    "Underneath, a dual-motor three-stage frame raises and lowers quietly and holds steady up to 220 pounds, with four programmable presets and anti-collision detection built in. A pull-out drawer keeps small things close, an under-desk tray hides your cables, and a solid wood block is fixed beneath the top so a clamp-style monitor arm has something firm to grip. It is an award-winning design at an honest, factory-direct price — everything you need, nothing you don't.",
+    "Most desks make you choose: a standing desk, or a desk with storage, or a desk with a monitor riser. The Snapsticker Apex is all three at once. A dual-level design stacks a main work surface and an integrated upper shelf, so your monitor, your tools, and your work each get their own level — reclaiming up to half the footprint a separate riser and storage cart would eat.",
+    "Underneath, an electric dual-motor lift raises and lowers the whole desk smoothly across a 30–55.9″ range, so you can sit, stand, or pop up to a quick presentation height with one button. The steel-and-aluminum frame holds steady up to 50 kg (110 lb), and lockable 60 mm casters mean you can roll the entire setup to a new spot and lock it back down.",
+    "Then there's everything built in: a magnetic pegboard and a modular drawer to organize your way, a desktop power outlet plus an external power strip so cables stay off the floor, and both a high-brightness task light and an RGB ambient light for late sessions. It's a complete, transformable workspace — sold factory-direct, at an honest price.",
   ],
 
   materials: [
-    { icon: '/images/product/icons/icon-dual-motor.png', title: 'Dual Motor', detail: 'Two motors and a three-stage frame raise and lower quietly and hold rock-steady.' },
-    { icon: '/images/product/icons/icon-wireless-charging.png', title: 'Wireless Charging', detail: 'A 10W Qi pad sits in the top — set your phone down and it charges.' },
-    { icon: '/images/product/icons/icon-cable-tray.png', title: 'Cable Management Tray', detail: 'An under-desk tray keeps your power strip and cables out of sight.' },
-    { icon: '/images/product/icons/icon-drawer.png', title: 'Embedded Drawer', detail: 'A built-in drawer, 28.3 × 12.8 × 1.97 in, for pens, notes, and a charger.' },
-    { icon: '/images/product/icons/icon-usb.png', title: 'USB Ports', detail: 'USB-A and USB-C on the front console — charge devices without an outlet.' },
-    { icon: '/images/product/icons/icon-height-range.png', title: 'Height Range', detail: '22.8″–49.2″ of sit-to-stand travel with the bamboo top on.' },
-    { icon: '/images/product/icons/icon-desktop.png', title: 'Applicable Desktop', detail: 'A natural lacquered bamboo top — about twice as hard as ordinary wood.' },
-    { icon: '/images/product/icons/icon-load-capacity.png', title: 'Load Capacity', detail: 'Holds a full 220 lb — multiple monitors and the rest of your setup.' },
+    { icon: '/images/product/icons/icon-dual-motor.png', title: 'Dual-Motor Lift', detail: 'Two motors raise and lower the whole desk smoothly and quietly across a 30–55.9″ range.' },
+    { icon: '/images/product/icons/icon-wireless-charging.png', title: 'Built-In Power', detail: 'A desktop outlet plus an external power strip keep charging on the desk, not under it.' },
+    { icon: '/images/product/icons/icon-cable-tray.png', title: 'Magnetic Pegboard', detail: 'A magnetic pegboard panel holds accessories and tools right where you reach for them.' },
+    { icon: '/images/product/icons/icon-drawer.png', title: 'Modular Drawer', detail: 'An adjustable drawer and side accessories let you organize storage your way.' },
+    { icon: '/images/product/icons/icon-usb.png', title: 'USB & Outlet', detail: 'Power and data on the desktop — charge a phone and plug in peripherals without an outlet hunt.' },
+    { icon: '/images/product/icons/icon-height-range.png', title: 'Height Range', detail: '30–55.9″ (76–142 cm) of electric sit-to-stand travel at the push of a button.' },
+    { icon: '/images/product/icons/icon-desktop.png', title: 'Wood Worktop', detail: 'A warm woodgrain top on a black frame — a clean, single colorway built to look right anywhere.' },
+    { icon: '/images/product/icons/icon-load-capacity.png', title: 'Load Capacity', detail: 'A steel-and-aluminum frame rated to a full 50 kg (110 lb) of monitors and gear.' },
   ],
 
   durability: [
-    { stat: '220 lb', label: 'Rated lift capacity' },
-    { stat: '22.8–49.2"', label: 'Sit-to-stand range' },
-    { stat: '4 presets', label: 'Programmable heights' },
-    { stat: '15 years', label: 'Warranty — frame & motor' },
+    { stat: '50 kg', label: 'Rated load (110 lb)' },
+    { stat: '30–55.9″', label: 'Electric height range' },
+    { stat: 'Dual motor', label: 'Smooth, quiet lift' },
+    { stat: '10 years', label: 'Warranty — frame, motors & electronics' },
   ],
 
   lifestyle: [
-    { src: '/images/product/gallery/07.png', alt: 'The Wylorise Sovereign Q8 as a bedroom vanity, styled beneath a round mirror', placeholder: 'linear-gradient(135deg, #f0e7d6 0%, #c9a24b 100%)', ratio: '1/1' },
-    { src: '/images/product/gallery/08.png', alt: 'The Wylorise Sovereign Q8 in a bright home office with an ergonomic chair by the window', placeholder: 'linear-gradient(135deg, #e6d9bd 0%, #b07a2e 100%)', ratio: '1/1' },
-    { src: '/images/product/gallery/02.png', alt: 'The Wylorise Sovereign Q8 styled head-on against a warm plaster wall', placeholder: 'linear-gradient(135deg, #efe6d3 0%, #c19a52 100%)', ratio: '1/1' },
+    { src: '/images/product/gallery/07.png', alt: 'The Snapsticker Apex in a bright home office, raised to standing height', placeholder: 'linear-gradient(135deg, #f0e7d6 0%, #a9743f 100%)', ratio: '1/1' },
+    { src: '/images/product/gallery/08.png', alt: 'The Snapsticker Apex with the pegboard and task light in a creative studio', placeholder: 'linear-gradient(135deg, #e6d9bd 0%, #2a2a2a 100%)', ratio: '1/1' },
+    { src: '/images/product/gallery/02.png', alt: 'The Snapsticker Apex styled head-on with a monitor on the upper shelf', placeholder: 'linear-gradient(135deg, #efe7da 0%, #6f4a26 100%)', ratio: '1/1' },
   ],
 
   trust: [
     { icon: 'RotateCcw', title: '30-Day Returns', sub: 'Risk-free in your space' },
     { icon: 'Truck', title: 'Free Shipping', sub: 'On all US orders' },
-    { icon: 'Shield', title: '15-Year Frame Warranty', sub: 'Frame, motor & electronics' },
+    { icon: 'Shield', title: '10-Year Warranty', sub: 'Frame, motors & electronics' },
     { icon: 'Lock', title: 'Secure Checkout', sub: 'Encrypted payment' },
   ],
 
   specs: [
-    { label: 'Desktop Material', value: 'Natural bamboo with protective lacquer' },
-    { label: 'Frame Material', value: 'Steel, three-stage oval legs' },
-    { label: 'Frame Color', value: 'White' },
-    { label: 'Height Range', value: '22.8" – 49.2"' },
-    { label: 'Lift Capacity', value: '220 lb' },
-    { label: 'Motor', value: 'Dual motor, 3-stage' },
-    { label: 'Height Presets', value: '4 programmable + anti-collision' },
-    { label: 'Charging', value: '10W wireless pad · USB-A + USB-C' },
-    { label: 'Storage', value: 'Pull-out drawer (28.3 × 12.8 × 1.97 in) + under-desk cable tray' },
-    { label: 'Monitor Arm Ready', value: 'Solid wood block under the top for a clamp mount' },
-    { label: 'Assembly', value: 'Required — instructions & hardware included' },
-    { label: 'Warranty', value: '15-year frame & motor · 5-year bamboo top' },
+    { label: 'Workspace', value: 'Dual-level — main desk + integrated monitor shelf / workbench' },
+    { label: 'Worktop', value: 'Warm woodgrain surface' },
+    { label: 'Frame', value: 'Heavy-duty steel & aluminum' },
+    { label: 'Finish', value: 'Oak & Black (wood top, black frame)' },
+    { label: 'Height Range', value: '30–55.9″ (76–142 cm), electric' },
+    { label: 'Lift', value: 'Dual motor, push-button height control' },
+    { label: 'Load Capacity', value: '50 kg (110 lb)' },
+    { label: 'Storage', value: 'Magnetic pegboard + modular drawer + side accessories' },
+    { label: 'Power', value: 'Desktop outlet + external power strip' },
+    { label: 'Lighting', value: 'High-brightness task light + RGB ambient light' },
+    { label: 'Mobility', value: 'Lockable 60 mm casters' },
+    { label: 'Assembly', value: 'Required — instructions, hardware & tools included' },
+    { label: 'Warranty', value: '10-year frame, motors & electronics' },
     { label: 'Care', value: 'Wipe clean with a soft, damp cloth' },
   ],
 
   inBox: [
-    'Natural bamboo desktop',
-    'Dual-motor adjustable steel frame (3-stage oval legs)',
-    'Front touch console with wireless charging + USB ports',
-    'Pull-out storage drawer',
-    'Under-desk cable management tray',
-    'Solid wood mounting block for a monitor-arm clamp',
+    'Dual-level desktop (main work surface + integrated upper shelf)',
+    'Heavy-duty steel & aluminum frame with dual lift motors',
+    'Magnetic pegboard panel',
+    'Modular storage drawer',
+    'Built-in desktop power outlet + external power strip',
+    'High-brightness task light + RGB ambient light strip',
+    'Four lockable 60 mm casters',
+    'Push-button height control handset',
     'Power adapter and cabling',
     'Assembly hardware, tools, and illustrated instructions',
   ],
@@ -302,39 +302,39 @@ export const ALDER_PRODUCT: Product = {
   features: [
     {
       num: '01',
-      kicker: 'BAMBOO TOP - WIRELESS CHARGING',
-      title: 'A surface that gives back',
-      body: 'Solid bamboo sealed with protective lacquer—roughly twice as hard as ordinary wood, naturally water and scratch-resistant. A 10W Qi charging pad is built into the front edge, so your phone charges with no cables required.',
-      image: { src: '/images/product/features/surface.png', alt: 'Close-up of the natural bamboo desktop surface and grain', placeholder: 'linear-gradient(135deg, #efe6d3 0%, #cda158 100%)', ratio: '3/4' },
+      kicker: 'DUAL-LEVEL · ELECTRIC SIT-STAND',
+      title: 'A desk that works on two levels',
+      body: 'A main work surface and an integrated upper shelf stack into one footprint — your monitor sits up top, your keyboard and tools below. An electric dual-motor lift raises the whole thing from 30 to 55.9 inches at the push of a button, so sitting, standing, and presentation modes are one tap away.',
+      image: { src: '/images/product/features/surface.png', alt: 'The Snapsticker Apex dual-level desktop raised to standing height', placeholder: 'linear-gradient(135deg, #efe7da 0%, #a9743f 100%)', ratio: '3/4' },
     },
     {
       num: '02',
-      kicker: 'MONITOR ARM READY',
-      title: 'Clamp on with confidence',
-      body: 'A solid wood block is fixed beneath the top so monitor-arm clamps have something firm to grip—no flexing the bamboo, no crushing over time. Your screens stay exactly where you set them, even when the desk moves.',
-      image: { src: '/images/product/features/charging.png', alt: 'The front touch console with the built-in wireless charging pad', placeholder: 'linear-gradient(135deg, #e6d9bd 0%, #8d6022 100%)', ratio: '3/4' },
+      kicker: 'BUILT-IN POWER · TASK + RGB LIGHT',
+      title: 'Power and light, already on the desk',
+      body: 'A desktop outlet and an external power strip keep everything charged without a tangle underneath, while a high-brightness task light handles focused work and an RGB ambient light sets the mood for gaming or late sessions. Power and lighting live in the desk, not in a mess around it.',
+      image: { src: '/images/product/features/charging.png', alt: 'The built-in desktop power outlet and lighting on the Snapsticker Apex', placeholder: 'linear-gradient(135deg, #e8dcc2 0%, #2a2a2a 100%)', ratio: '3/4' },
     },
     {
       num: '03',
-      kicker: 'INTEGRATED CABLE TRAY',
-      title: 'Cables, out of sight',
-      body: 'A full-width tray runs beneath the top, so your power strip and cables hide as the desk rises and lowers—never dangling, never snagging. What you see is the desk. What you don&apos;t is the tangle.',
-      image: { src: '/images/product/features/storage.png', alt: 'The pull-out storage drawer open under the desktop', placeholder: 'linear-gradient(135deg, #e8dcc2 0%, #b07a2e 100%)', ratio: '3/4' },
+      kicker: 'MAGNETIC PEGBOARD · MODULAR STORAGE',
+      title: 'Storage that adapts to you',
+      body: 'A magnetic pegboard panel and a modular drawer let you arrange accessories, tools, and small things exactly how you work — then rearrange them when your setup changes. Side accessories clip on where you need them, so the desk grows with you instead of boxing you in.',
+      image: { src: '/images/product/features/storage.png', alt: 'The magnetic pegboard and modular drawer on the Snapsticker Apex', placeholder: 'linear-gradient(135deg, #e8dcc2 0%, #6f4a26 100%)', ratio: '3/4' },
     },
     {
       num: '04',
-      kicker: 'SMART TOUCH CONSOLE',
-      title: 'Meets you at your level',
-      body: 'A backlit touch console with a digital height readout, four programmable presets, USB-A and USB-C ports, and anti-collision detection. One tap returns you to your exact sit or stand height—no reaching, no guesswork.',
-      image: { src: '/images/product/features/cable.png', alt: 'The under-desk cable management tray', placeholder: 'linear-gradient(135deg, #e6d9bd 0%, #a06d28 100%)', ratio: '3/4' },
+      kicker: 'STEEL + ALUMINUM · 50 KG · CASTERS',
+      title: 'Sturdy, quiet, and ready to roll',
+      body: 'A heavy-duty steel-and-aluminum frame holds rock-steady up to a full 50 kg (110 lb) of monitors and gear, with an ultra-quiet dual-motor lift. Lockable 60 mm casters let you roll the entire workspace to a new spot and lock it firmly back in place.',
+      image: { src: '/images/product/features/cable.png', alt: 'The steel-and-aluminum frame and lockable casters of the Snapsticker Apex', placeholder: 'linear-gradient(135deg, #e6d9bd 0%, #1a1a1a 100%)', ratio: '3/4' },
     },
   ],
 
   dimensions: {
-    width: '55" / 63" / 72"',
-    depth: '28" / 30" / 30"',
-    heightRange: '22.8" – 49.2"',
-    capacity: '220 lb',
+    width: '120 / 140 / 160 cm (47 / 55 / 63 in)',
+    depth: '60 / 68 / 75 cm (24 / 27 / 30 in)',
+    heightRange: '30–55.9″ (76–142 cm), electric',
+    capacity: '50 kg (110 lb)',
     weight: 'Varies by size',
   },
 
@@ -346,40 +346,41 @@ export const ALDER_PRODUCT: Product = {
     items: [
       {
         stars: 5,
-        body: "The bamboo top looks fantastic on video calls, and I still can't believe the price — it feels like a desk that should cost three times as much.",
+        body: "The dual-level top is the whole reason I bought it — monitor up top, keyboard below, and my tiny room finally feels organized. Going from sitting to standing is one button. Can't believe the price.",
         author: 'Marcus T.',
-        config: 'The Pro',
+        config: 'Pro',
         verified: true,
-        photo: { src: '', alt: 'Customer workspace with the Wylorise Sovereign Q8', placeholder: 'linear-gradient(135deg, #e8dcc2 0%, #b07a2e 100%)', ratio: '16/9' },
+        photo: { src: '', alt: 'Customer workspace with the Snapsticker Apex', placeholder: 'linear-gradient(135deg, #efe7da 0%, #6f4a26 100%)', ratio: '16/9' },
       },
       {
         stars: 5,
-        body: 'Smooth, quiet, and rock-steady even with two monitors and a laptop on it. Charging my phone right on the desk is the little thing I did not know I needed.',
+        body: 'Lift is smooth and genuinely quiet, and the magnetic pegboard is addictive — I keep rearranging it. The built-in power strip cleaned up the cable mess under my old desk completely.',
         author: 'Priya S.',
-        config: 'The Standard',
+        config: 'Compact',
         verified: true,
       },
       {
         stars: 5,
-        body: 'I was nervous ordering a desk like this online, but it arrived perfectly and went together easily. The four height presets and the hidden cable tray are my favorite parts.',
+        body: 'Rolled it into the corner of my studio on the casters, locked it, and it does not budge with two monitors on it. The task light plus the RGB strip is perfect for evening work. Easily my best desk.',
         author: 'James K.',
-        config: 'The Executive',
+        config: 'Studio',
         verified: true,
-        photo: { src: '', alt: 'The Wylorise Sovereign Q8 in a home office', placeholder: 'linear-gradient(135deg, #efe6d3 0%, #8d6022 100%)', ratio: '16/9' },
+        photo: { src: '', alt: 'The Snapsticker Apex in a home studio', placeholder: 'linear-gradient(135deg, #e6d9bd 0%, #1a1a1a 100%)', ratio: '16/9' },
       },
     ],
   },
 
   faq: [
-    { q: 'Is the top real bamboo?', a: 'Yes — every top is natural bamboo sealed with a protective lacquer, not laminate or a printed pattern. Because it is real bamboo, the grain varies slightly from desk to desk, so yours is one of a kind.' },
-    { q: 'How much weight can it hold?', a: 'The dual-motor, three-stage frame is rated to 220 lb, so it comfortably supports multiple monitors, a laptop, and the rest of your setup while moving between sitting and standing.' },
-    { q: 'Can I mount a monitor arm?', a: "Yes. A solid wood block is fixed beneath the desktop so a clamp-style monitor arm has something firm to grip — there's no flexing or cracking the bamboo." },
-    { q: 'Does it charge my devices?', a: 'A 10W wireless pad sits on the front touch console, alongside USB-A and USB-C ports, so you can charge a phone and plug in peripherals without reaching for a wall outlet.' },
-    { q: 'Does it require assembly?', a: 'Some assembly is required. It ships in two boxes with all the hardware, tools, and illustrated instructions, and most people set it up without any special tools.' },
-    { q: "What's the warranty?", a: 'The frame, motor, and electronics are covered for 15 years, and the bamboo top is covered for 5 years.' },
+    { q: 'What makes it "dual-level"?', a: 'The Apex has two work surfaces in one footprint — a main desktop plus an integrated upper shelf for your monitor and accessories. It replaces a separate monitor riser and storage cart, saving you up to about half the space.' },
+    { q: 'How does the height adjustment work?', a: 'An electric dual-motor lift raises and lowers the whole desk across a 30–55.9″ (76–142 cm) range at the push of a button, so you can switch between sitting, standing, and a quick presentation height in seconds.' },
+    { q: 'How much weight can it hold?', a: 'The heavy-duty steel-and-aluminum frame is rated to 50 kg (110 lb), so it comfortably supports multiple monitors, your computer, and the rest of your setup while it moves.' },
+    { q: 'Can I move it around?', a: 'Yes. It rides on four lockable 60 mm casters, so you can roll the entire workspace to a new spot and lock it firmly in place when you get there.' },
+    { q: 'What is built into the desk?', a: 'A magnetic pegboard and a modular drawer for storage, a desktop power outlet plus an external power strip, and both a high-brightness task light and an RGB ambient light.' },
+    { q: 'Does it require assembly?', a: 'Some assembly is required. It ships with all the hardware, tools, and illustrated instructions, and most people set it up without any special tools.' },
+    { q: "What's the warranty?", a: 'The Apex is backed by a 10-year warranty covering the frame, the lift motors, and the electronics against defects in materials and workmanship.' },
   ],
 
-  shipEta: 'Ships in 1–2 business days',
+  shipEta: 'Ships in 2 business days',
 }
 /**
  * getVariantHeroImage — the canonical image for a chosen colour/finish variant.
@@ -440,23 +441,23 @@ export function getSizeOption(sizeId?: string | null): VariantOption | undefined
   return getAxisByKey(SIZE_AXIS_KEY)?.options.find(o => o.id === sizeId)
 }
 
-/** The finish option for a finish id ('white' | 'mocha'), or undefined. */
+/** The finish option for a finish id ('white'), or undefined. */
 export function getFinishOption(finishId?: string | null): VariantOption | undefined {
   if (!finishId) return undefined
   return getAxisByKey(FINISH_AXIS_KEY)?.options.find(o => o.id === finishId)
 }
 
-/** Size label, e.g. 'Standard'. Falls back to the raw id if unknown. */
+/** Size label, e.g. 'Pro'. Falls back to the raw id if unknown. */
 export function sizeLabel(sizeId?: string | null): string {
   return getSizeOption(sizeId)?.label ?? (sizeId ?? '')
 }
 
-/** Size dimensions, e.g. '55 × 28 in'. '' if unknown. */
+/** Size dimensions, e.g. '140 × 68 cm · 55 × 27 in'. '' if unknown. */
 export function sizeDimensions(sizeId?: string | null): string {
   return getSizeOption(sizeId)?.sub ?? ''
 }
 
-/** Finish label, e.g. 'White'. Falls back to the raw id if unknown. */
+/** Finish label, e.g. 'Oak & Black'. Falls back to the raw id if unknown. */
 export function finishLabel(finishId?: string | null): string {
   return getFinishOption(finishId)?.label ?? (finishId ?? '')
 }
@@ -466,7 +467,7 @@ export function finishSwatch(finishId?: string | null): string | undefined {
   return getFinishOption(finishId)?.swatch
 }
 
-/** Canonical one-line variant subtitle, e.g. 'Standard · White'. */
+/** Canonical one-line variant subtitle, e.g. 'Pro · Oak & Black'. */
 export function variantSubtitle(sizeId?: string | null, finishId?: string | null): string {
   return [sizeLabel(sizeId), finishLabel(finishId)].filter(Boolean).join(' · ')
 }

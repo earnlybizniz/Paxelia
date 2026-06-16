@@ -12,6 +12,11 @@ export function VariantSelector() {
   return (
     <div className="flex flex-col gap-6 min-w-0">
       {product.axes.map((axis) => {
+        // Hide any axis that has a single option (e.g. a one-colorway finish) — there
+        // is nothing to choose, so no picker is rendered. The single option still flows
+        // through the cart, checkout, and order emails as the product's fixed finish.
+        if (axis.options.length <= 1) return null
+
         const selectedOption = axis.options.find(o => o.id === selection[axis.key])
 
         return (
