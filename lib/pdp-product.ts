@@ -156,7 +156,7 @@ export const ALDER_PRODUCT: Product = {
         // price    = basePrice + priceDelta   → 99.99 / 139.99 / 189.99
         // compareAt = compareAt + compareDelta → 499.99 / 699.99 / 899.99
         {
-          id: 'sm', label: 'Compact', sub: '120 × 60 cm · 47 × 24 in',
+          id: 'sm', label: '120 × 60 cm', sub: '47 × 24 in',
           tagline: 'Single-monitor setups & tighter rooms',
           priceDelta: -40, compareDelta: -200,                 // 99.99 (was 499.99)
           specs: [
@@ -166,7 +166,7 @@ export const ALDER_PRODUCT: Product = {
           ],
         },
         {
-          id: 'md', label: 'Pro', sub: '140 × 68 cm · 55 × 27 in',
+          id: 'md', label: '140 × 68 cm', sub: '55 × 27 in',
           tagline: 'Room for dual monitors — the popular pick',
           priceDelta: 0, compareDelta: 0, default: true,       // 139.99 (was 699.99)
           specs: [
@@ -176,7 +176,7 @@ export const ALDER_PRODUCT: Product = {
           ],
         },
         {
-          id: 'lg', label: 'Studio', sub: '160 × 75 cm · 63 × 30 in',
+          id: 'lg', label: '160 × 75 cm', sub: '63 × 30 in',
           tagline: 'Widest top — triple-monitor & creative setups',
           priceDelta: 50, compareDelta: 200,                   // 189.99 (was 899.99)
           specs: [
@@ -343,7 +343,7 @@ export const ALDER_PRODUCT: Product = {
         stars: 5,
         body: "The dual-level top is the whole reason I bought it — monitor up top, keyboard below, and my tiny room finally feels organized. Going from sitting to standing is one button. Can't believe the price.",
         author: 'Marcus T.',
-        config: 'Pro',
+        config: '140 × 68 cm',
         verified: true,
         photo: { src: '', alt: 'Customer workspace with the Snapsticker Apex', placeholder: 'linear-gradient(135deg, #efe7da 0%, #6f4a26 100%)', ratio: '16/9' },
       },
@@ -351,14 +351,14 @@ export const ALDER_PRODUCT: Product = {
         stars: 5,
         body: 'Lift is smooth and genuinely quiet, and the magnetic pegboard is addictive — I keep rearranging it. The built-in power strip cleaned up the cable mess under my old desk completely.',
         author: 'Priya S.',
-        config: 'Compact',
+        config: '120 × 60 cm',
         verified: true,
       },
       {
         stars: 5,
         body: 'Rolled it into the corner of my studio on the casters, locked it, and it does not budge with two monitors on it. The task light plus the RGB strip is perfect for evening work. Easily my best desk.',
         author: 'James K.',
-        config: 'Studio',
+        config: '160 × 75 cm',
         verified: true,
         photo: { src: '', alt: 'The Snapsticker Apex in a home studio', placeholder: 'linear-gradient(135deg, #e6d9bd 0%, #1a1a1a 100%)', ratio: '16/9' },
       },

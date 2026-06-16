@@ -2,13 +2,13 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
-import { ZoomIn, X, ChevronLeft, ChevronRight } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { X, ChevronLeft, ChevronRight } from 'lucide-react'
 import Image from 'next/image'
 import { useProduct } from '@/contexts/product-context'
 import type { ProductImage } from '@/lib/pdp-product'
 import { cn } from '@/lib/utils'
-import { fade, E } from '@/lib/motion'
+import { E } from '@/lib/motion'
 
 /**
  * Renders a gallery item as an autoplay/loop/muted <video> when kind==='video',
@@ -67,9 +67,7 @@ function ThumbMedia({ item, sizes }: { item: ProductImage; sizes: string }) {
 export function Gallery() {
   const { product, gallery, activeImage, activeIndex, setActiveIndex } = useProduct()
   const [lightboxOpen, setLightboxOpen] = useState(false)
-  const [hovered, setHovered] = useState(false)
   const [mounted, setMounted] = useState(false)
-  const reduced = useReducedMotion()
   const thumbStripRef = useRef<HTMLDivElement>(null)
   const badge = product.badges[0]
 
@@ -179,8 +177,6 @@ export function Gallery() {
         <div
           className="relative aspect-square overflow-hidden rounded-none md:rounded-[8px] bg-[var(--paper2)] cursor-zoom-in select-none -mx-5 md:mx-0"
           style={{ touchAction: 'pan-y' }}
-          onMouseEnter={() => setHovered(true)}
-          onMouseLeave={() => setHovered(false)}
           onClick={() => { if (!touchHandled.current) setLightboxOpen(true) }}
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
@@ -193,31 +189,29 @@ export function Gallery() {
             </div>
           )}
 
-          {/* Zoom hint */}
-          <AnimatePresence>
-            {hovered && !reduced && (
-              <motion.div
-                className="absolute bottom-4 right-4 z-10 flex items-center gap-1.5 bg-[var(--paper)]/90 backdrop-blur-sm px-2.5 py-1.5 rounded-full"
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 8 }}
-                transition={{ duration: 0.2, ease: E }}
-              >
-                <ZoomIn size={14} className="text-[var(--ink-soft)]" />
-                <span className="font-sans text-[0.7rem] text-[var(--ink-soft)]">Click to zoom</span>
-              </motion.div>
-            )}
-          </AnimatePresence>
+          {/* Image swap is instant — all photos are stacked + preloaded below */}
 
-          {/* Image swap — INSTANT (no crossfade) for a fast, Shopify-like feel */}
+          {/* Image stack — INSTANT switch (no reload, no crossfade) */}
           <div className="absolute inset-0">
             <div className="absolute inset-0" style={{ background: activeImage.placeholder }} />
-            <GalleryMedia
-              item={activeImage}
-              className="object-cover w-full h-full"
-              sizes="(max-width: 768px) 100vw, 50vw"
-              priority={activeIndex === 0}
-            />
+            {gallery.map((img, i) => {
+              const isActive = i === activeIndex
+              // Videos mount only when active so several don't autoplay at once.
+              if (img.kind === 'video' && !isActive) return null
+              return (
+                <div
+                  key={i}
+                  className={isActive ? 'absolute inset-0 z-[1]' : 'absolute inset-0 opacity-0 pointer-events-none'}
+                >
+                  <GalleryMedia
+                    item={img}
+                    className="object-cover w-full h-full"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    priority={i === 0}
+                  />
+                </div>
+              )
+            })}
           </div>
 
           {/* Desktop prev/next arrows */}
@@ -260,8 +254,8 @@ export function Gallery() {
               className={cn(
                 'relative flex-shrink-0 w-14 h-14 overflow-hidden rounded-[5px] transition-all duration-200',
                 i === activeIndex
-                  ? 'ring-2 ring-[var(--ink)]'
-                  : 'opacity-50 hover:opacity-100 ring-1 ring-[var(--ink)]/10'
+                  ? 'ring-2 ring-inset ring-[var(--ink)]'
+                  : 'opacity-50 hover:opacity-100 ring-1 ring-inset ring-[var(--ink)]/10'
               )}
               aria-label={`View image ${i + 1}: ${img.alt}`}
               aria-pressed={i === activeIndex}
